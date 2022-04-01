@@ -13,7 +13,7 @@ public class MedianofTwoSortedArrays {
 			boolean oddSize = (nums1.length + nums2.length)%2 == 0;
 			int medianLoc = (nums1.length + nums2.length)/2;
 			int n1loc = 0;int n2loc = 0;
-			int lowerBoudV =  (int)Math.pow(10,6) + 1;
+			int lowerBoudV =  Integer.MAX_VALUE;
 			int curV = lowerBoudV ;
 			int preV = lowerBoudV;
 			for(int i=0; i<=medianLoc; i++){

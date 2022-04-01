@@ -6,6 +6,10 @@ import java.util.PriorityQueue;
 
 public class BusiestServers {
 
+	public static void main(String[] args) {
+		new BusiestServers().busiestServers(1, new int[]{1,2}, new int[]{3,4});
+	}
+
 	public List<Integer> busiestServers(int k, int[] arrival, int[] load) {
 		PriorityQueue<Integer> available = new PriorityQueue<>((a,  b) -> a - b);
 		for(int i=0; i<k; i++)
