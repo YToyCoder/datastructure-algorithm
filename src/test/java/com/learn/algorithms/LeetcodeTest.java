@@ -6,6 +6,7 @@ import com.learn.algorithms.leetcode.book.RemoveElement;
 import com.learn.algorithms.leetcode.easy.MinBitFlips;
 import com.learn.algorithms.leetcode.easy.NextGreatestLetter;
 import com.learn.algorithms.leetcode.medium.ConvertTime;
+import com.learn.algorithms.leetcode.medium.Jump;
 import com.learn.algorithms.leetcode.medium.MinDeletion;
 
 import junit.framework.TestCase;
@@ -81,5 +82,23 @@ public class LeetcodeTest extends TestCase {
 		assertEquals(3, res1);
 		int res2 = code.convertTime("11:00", "11:01");
 		assertEquals(1, res2);
+	}
+
+	public void testJump(){
+		Jump code = new Jump();
+		int res0 = code.jump(new int[]{1,1,1,1});
+		assertEquals(3, res0);
+		int res1 = code.jump(new int[]{2,3,1,1,4});
+		assertEquals(2, res1);
+		int res2 = code.jump(new int[]{2,3,0,1,4});
+		assertEquals(2, res2);
+		int res3 = code.jump(new int[]{1,2});
+		assertEquals(1, res3);
+		int res4 = code.jump(new int[]{0});
+		assertEquals(0, res4);
+		int res5 = code.jump(new int[]{3});
+		assertEquals(0, res5);
+		int res6 = code.jump(new int[]{2, 1});
+		assertEquals(1, res6);
 	}
 }
