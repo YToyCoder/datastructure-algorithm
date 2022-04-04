@@ -18,7 +18,7 @@ public class Lists {
 	public static String intArrayToString(int[] arr) {
 		StringBuilder sb = new StringBuilder("(");
 		for(int i : arr){
-			sb.append(" ").append(i);
+			sb.append(" ").append(Integer.toString(i));
 		}
 		sb.append(" )");
 		return sb.toString();
