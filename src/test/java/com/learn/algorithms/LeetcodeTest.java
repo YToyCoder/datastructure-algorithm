@@ -6,6 +6,7 @@ import com.learn.algorithms.leetcode.book.RemoveElement;
 import com.learn.algorithms.leetcode.easy.MinBitFlips;
 import com.learn.algorithms.leetcode.easy.NextGreatestLetter;
 import com.learn.algorithms.leetcode.medium.ConvertTime;
+import com.learn.algorithms.leetcode.medium.Divide;
 import com.learn.algorithms.leetcode.medium.Jump;
 import com.learn.algorithms.leetcode.medium.MinDeletion;
 
@@ -75,7 +76,7 @@ public class LeetcodeTest extends TestCase {
 		int res2 = code.minDeletion(new int[]{1,1,2,2,3,3});
 		assertEquals(2, res2);
 	}
-	
+
 	public void testConvertTime(){
 		ConvertTime code = new ConvertTime();
 		int res1 = code.convertTime("02:30", "04:35");
@@ -100,5 +101,17 @@ public class LeetcodeTest extends TestCase {
 		assertEquals(0, res5);
 		int res6 = code.jump(new int[]{2, 1});
 		assertEquals(1, res6);
+	}
+	
+	public void testDivide(){
+		Divide code = new Divide();
+		int res0 = code.divide(7, 3);
+		assertEquals("7/3 = 2", 2, res0);
+		int res1 = code.divide(7, -3);
+		assertEquals("7/-3 = -2", -2, res1);
+		int res2 = code.divide(-2147483648,-1);
+		assertEquals("-2147483648/-1 = 2147483647", 2147483647, res2); 
+		int res3 = code.divide(2147483647,3);
+		assertEquals("2147483647/3", 715827882, res3);
 	}
 }
