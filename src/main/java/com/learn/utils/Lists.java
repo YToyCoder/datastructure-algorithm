@@ -1,6 +1,9 @@
 package com.learn.utils;
 
 import java.util.List;
+import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class Lists {
 	
@@ -22,5 +25,25 @@ public class Lists {
 		}
 		sb.append(" )");
 		return sb.toString();
+	}
+	
+	public static boolean contains(List<List<Integer>> collection, int[][] arrs){
+		if(collection.size() != arrs.length) return false;
+		for(int[] item : arrs){
+			Predicate<List<Integer>> predicate = input -> {
+				if(input.size() != item.length) return false;
+				for(int i : item){
+					if(!input.contains(i)){
+						return false;
+					}
+					if(!input.remove(Integer.valueOf(i))){
+						return false;
+					}
+				}
+				return input.isEmpty();
+			};
+			collection = collection.stream().filter(each -> !predicate.test(each)).collect(Collectors.toList());
+		}
+		return collection.isEmpty();
 	}
 }
