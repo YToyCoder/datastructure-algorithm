@@ -1,5 +1,7 @@
 package com.learn.algorithms;
 
+import static org.junit.Assert.assertArrayEquals;
+
 import com.learn.algorithms.leetcode.book.CountingSort;
 import com.learn.algorithms.leetcode.book.RadixSort;
 import com.learn.utils.Lists;
@@ -22,7 +24,7 @@ public class BookTest extends TestCase {
 		RadixSort code = new RadixSort();
 		int[] source = new int[]{16, 4, 10, 14, 7, 9, 3, 2, 8, 1};
 		int[] res1 = code.sort(source);
-		assertEquals("( 1 2 3 4 7 8 9 10 14 16 )", Lists.intArrayToString(res1));
+		assertArrayEquals(source, res1);
 		int[] s2 = new int[]{62,14,59,88,16};
 		int[] res2 = code.sort(s2);
 		assertEquals("( 14 16 59 62 88 )", Lists.intArrayToString(res2));
