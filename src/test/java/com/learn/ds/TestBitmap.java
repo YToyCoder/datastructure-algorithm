@@ -18,4 +18,14 @@ public class TestBitmap {
 		Arrays.sort(copy);
 		assertArrayEquals(source, copy);
 	}
+
+	@Test
+	public void test2(){
+		// 2 2 4 4 10 32 40
+		int[] source = new int[]{40,32,10,2,4};
+		int[] copy = Arrays.copyOf(source, source.length);
+		BitMap.sort(source);
+		Arrays.sort(copy);
+		assertArrayEquals(source, copy);
+	}
 }
