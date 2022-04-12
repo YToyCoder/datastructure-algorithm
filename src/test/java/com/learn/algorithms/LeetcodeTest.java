@@ -1,10 +1,13 @@
 package com.learn.algorithms;
 
-import com.learn.algorithms.leetcode.book.CountAndSay;
-import com.learn.algorithms.leetcode.book.LowerBound;
-import com.learn.algorithms.leetcode.book.RemoveElement;
+import static org.junit.Assert.assertArrayEquals;
+
+import com.learn.algorithms.book.CountAndSay;
+import com.learn.algorithms.book.LowerBound;
+import com.learn.algorithms.book.RemoveElement;
 import com.learn.algorithms.leetcode.easy.MinBitFlips;
 import com.learn.algorithms.leetcode.easy.NextGreatestLetter;
+import com.learn.algorithms.leetcode.easy.NumberOfLines;
 import com.learn.algorithms.leetcode.medium.ConvertTime;
 import com.learn.algorithms.leetcode.medium.Divide;
 import com.learn.algorithms.leetcode.medium.Jump;
@@ -113,5 +116,13 @@ public class LeetcodeTest extends TestCase {
 		assertEquals("-2147483648/-1 = 2147483647", 2147483647, res2); 
 		int res3 = code.divide(2147483647,3);
 		assertEquals("2147483647/3", 715827882, res3);
+	}
+	
+	public void testNumberOfLines(){
+		NumberOfLines code = new NumberOfLines();
+		int[] res1 = code.numberOfLines(new int[]{10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}, "abcdefghijklmnopqrstuvwxyz");
+		assertArrayEquals(new int[]{3,60}, res1);
+		int[] res2 = code.numberOfLines(new int[]{4,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}, "bbbcccdddaaa");
+		assertArrayEquals(new int[]{2,4}, res2);
 	}
 }

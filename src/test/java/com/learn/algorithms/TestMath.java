@@ -2,7 +2,7 @@ package com.learn.algorithms;
 
 import static org.junit.Assert.assertEquals;
 
-import com.learn.algorithms.leetcode.book.Math;
+import com.learn.algorithms.book.Math;
 
 import org.junit.Test;
 

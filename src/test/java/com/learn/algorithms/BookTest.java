@@ -2,8 +2,8 @@ package com.learn.algorithms;
 
 import static org.junit.Assert.assertArrayEquals;
 
-import com.learn.algorithms.leetcode.book.CountingSort;
-import com.learn.algorithms.leetcode.book.RadixSort;
+import com.learn.algorithms.book.CountingSort;
+import com.learn.algorithms.book.RadixSort;
 import com.learn.utils.Lists;
 
 import junit.framework.TestCase;

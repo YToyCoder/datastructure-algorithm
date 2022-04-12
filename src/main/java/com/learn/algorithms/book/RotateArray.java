@@ -1,4 +1,4 @@
-package com.learn.algorithms.leetcode.book;
+package com.learn.algorithms.book;
 
 import java.util.Objects;
 
