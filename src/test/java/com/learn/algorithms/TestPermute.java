@@ -1,6 +1,5 @@
 package com.learn.algorithms;
 
-import static org.junit.Assert.assertArrayEquals;
 import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;

@@ -7,11 +7,15 @@ import com.learn.algorithms.book.LowerBound;
 import com.learn.algorithms.book.RemoveElement;
 import com.learn.algorithms.leetcode.easy.MinBitFlips;
 import com.learn.algorithms.leetcode.easy.NextGreatestLetter;
+import com.learn.algorithms.leetcode.easy.NumWays;
 import com.learn.algorithms.leetcode.easy.NumberOfLines;
 import com.learn.algorithms.leetcode.medium.ConvertTime;
 import com.learn.algorithms.leetcode.medium.Divide;
+import com.learn.algorithms.leetcode.medium.Insert;
 import com.learn.algorithms.leetcode.medium.Jump;
 import com.learn.algorithms.leetcode.medium.MinDeletion;
+
+import org.junit.Test;
 
 import junit.framework.TestCase;
 
@@ -124,5 +128,18 @@ public class LeetcodeTest extends TestCase {
 		assertArrayEquals(new int[]{3,60}, res1);
 		int[] res2 = code.numberOfLines(new int[]{4,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10}, "bbbcccdddaaa");
 		assertArrayEquals(new int[]{2,4}, res2);
+	}
+	
+	public void testInsert(){
+		Insert code = new Insert();
+	}
+	
+	public void testNumWays(){
+		NumWays code = new NumWays();
+		assertEquals("0", 1, code.numWays(0));
+		assertEquals("1", 1, code.numWays(1));
+		assertEquals("2", 2, code.numWays(2));
+		assertEquals("44", 134903163, code.numWays(44));
+		assertEquals("46", 971215059, code.numWays(46));
 	}
 }
