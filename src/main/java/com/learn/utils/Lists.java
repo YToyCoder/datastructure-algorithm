@@ -1,6 +1,7 @@
 package com.learn.utils;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
@@ -45,5 +46,10 @@ public class Lists {
 			collection = collection.stream().filter(each -> !predicate.test(each)).collect(Collectors.toList());
 		}
 		return collection.isEmpty();
+	}
+	
+	public static <T> void  print(T[] ls, Consumer<T> consumer){
+		for(T i : ls)
+			consumer.accept(i);
 	}
 }
