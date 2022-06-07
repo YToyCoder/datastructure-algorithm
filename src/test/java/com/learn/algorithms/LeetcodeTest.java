@@ -14,6 +14,8 @@ import com.learn.algorithms.leetcode.medium.Divide;
 import com.learn.algorithms.leetcode.medium.Insert;
 import com.learn.algorithms.leetcode.medium.Jump;
 import com.learn.algorithms.leetcode.medium.MinDeletion;
+import com.learn.algorithms.leetcode.medium.MinEatingSpeed;
+import com.learn.algorithms.leetcode.medium.SortColors;
 
 import org.junit.Test;
 
@@ -141,5 +143,26 @@ public class LeetcodeTest extends TestCase {
 		assertEquals("2", 2, code.numWays(2));
 		assertEquals("44", 134903163, code.numWays(44));
 		assertEquals("46", 971215059, code.numWays(46));
+	}
+
+	public void testMinEatingSpeed() {
+		MinEatingSpeed code = new MinEatingSpeed();
+		int ans = code.minEatingSpeed(new int[]{3,6,7,11}, 8);
+		assertEquals("3 6 7 11 - 8", 4, ans);
+		int ans1 = code.minEatingSpeed(new int[]{30,11,23,4,20}, 5);
+		assertEquals(30, ans1);
+	}
+	
+	public void testSortColors() {
+		var code = new SortColors();
+		var case1 = new int[] {2,1,2};
+		code.sortColors(case1);
+		assertArrayEquals("2, 1, 2", new int[]{1, 2, 2}, case1);
+		var case2 = new int[] {2,0,1};
+		code.sortColors(case2);
+		assertArrayEquals("2, 0, 1", new int[]{0, 1, 2}, case2);
+		var case3 = new int[]{0,2,2,2,0,2,1,1};
+		code.sortColors(case3);
+		assertArrayEquals("0,2,2,2,0,2,1,1", new int[]{0,0,1,1,2,2,2,2}, case3);
 	}
 }
