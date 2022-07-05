@@ -46,6 +46,24 @@ public class BasicSortTest {
     common(BasicSort::merge);
   }
 
+  /**
+   *            100
+   *           /   \
+   *         30     25
+   *        / \    /  \
+   *      16 21   10  3
+   *     / \  /\    
+   *    7  8 6
+   */
+  @Test
+  public void heapTest() {
+    common(BasicSort::heap);
+    // BasicSort.heap(case1);
+    // case1.forEach(System.out::println);
+    // BasicSort.heap(case2);
+    // case2.forEach(System.out::println);
+  }
+
   public void common(Consumer<List<Integer>> sort){
     sort.accept(case1);
     assertArrayEquals(case1.toArray(), List.of(1,2,4,9).toArray());

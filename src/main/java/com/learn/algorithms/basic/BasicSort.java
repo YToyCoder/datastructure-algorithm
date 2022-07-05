@@ -2,9 +2,77 @@ package com.learn.algorithms.basic;
 
 import java.util.List;
 
+import com.learn.utils.Heaps;
+
 public class BasicSort {
   private BasicSort(){}
 
+
+  /**
+   * heap sort
+   * structure:
+   *  array [0, 1, 2, 3, 4, 5, 6, ...] can be seen as follow: 
+   *        0 
+   *       / \
+   *      1   2
+   *     / \ / \
+   *    3  4 5  6
+   *   ...
+   * node i has child 2 * i + 1 and 2 * i + 2 , has parent (i - 1)/2
+   * try to build the max heap
+   * @param <T>
+   * @param list
+   */
+  public static <T extends Comparable<T>> void heap(List<T> list){
+    // build the heap
+    for(int i= list.size()/2 - 1; i >= 0; i--){
+      heapfyDown(list, i, list.size());
+    }
+    System.out.println("built");
+    list.forEach(System.out::println);
+    System.out.println("print finished");
+
+    // iterate list select swap index of 0 and end, do {@code heapfyDown} from 0 to end
+    for(int i=0; i < list.size(); i++){
+      final int end = list.size()  - i;
+      swap(list, 0, end - 1);
+      heapfyDown(list, 0, end - 1);
+    }
+  }
+
+  /**
+   * a is greater than b
+   * @param <T>
+   * @param a
+   * @param b
+   * @return a > b
+   */
+  private static <T extends Comparable<T>> boolean greater(T a, T b) {
+    return a.compareTo(b) > 0;
+  }
+
+  private static <T extends Comparable<T>> void heapfyDown(List<T> list, int start, int end){
+    int walk = start;
+    int leftChild = Heaps.leftChild(walk), rightChild = Heaps.rightChild(walk);
+    while(
+      walk < end && 
+      ( 
+        (leftChild < end && greater(list.get(leftChild), list.get(walk))) || 
+        (rightChild < end && greater(list.get(rightChild), list.get(walk)))
+      )
+    ){
+      // swap with child 
+      final int betterChild = 
+        leftChild < end && 
+        (rightChild >= end || greater(list.get(leftChild), list.get(rightChild))) 
+        ? leftChild : 
+          rightChild ;
+      swap(list, walk, betterChild);
+      walk = betterChild;
+      leftChild = Heaps.leftChild(walk);
+      rightChild = Heaps.rightChild(walk);
+    }
+  }
 
   /**
    * merge sort
@@ -24,7 +92,7 @@ public class BasicSort {
 
     // do sort
     for(int i=0; i<end; i++){
-      // 
+      // use insertion sort 
       insertionSort(list, start, end);
     }
   } 
