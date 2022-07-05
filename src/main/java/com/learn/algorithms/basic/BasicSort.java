@@ -7,6 +7,21 @@ public class BasicSort {
 
 
   /**
+   * bubble sort
+   * @param <T>
+   * @param list
+   */
+  public static <T extends Comparable<T>> void bubble(List<T> list){
+    for(int i = 0; i < list.size() - 1; i++){
+      for(int j=0; j < list.size() - i - 1; j++){
+        if(list.get(j).compareTo(list.get(j + 1)) > 0){
+          swap(list, j, j + 1);
+        }
+      }
+    }
+  }
+
+  /**
    * insertion sort
    * @param <T>
    * @param list
