@@ -26,10 +26,48 @@ public class BasicSort {
      * |            ||
      * |            \/
      * ? 7 9 4 5 2 1 6
-     *  pivot
-     *   ||
-     *   \/
-     * ? 6 9 4 5 2 1 7
+     *     |
+     *    walk
+     * 
+     * lower       pivot
+     * |            ||
+     * |            \/
+     * ? 7 9 4 5 2 1 6
+     *       |
+     *      walk -> less than pivot && do swap
+     *  
+     *  lower      pivot
+     *   |          ||
+     *   |          \/
+     * ? 4 9 7 5 2 1 6
+     *       |
+     *      walk -> swapped && continue
+     * 
+     *  lower      pivot
+     *   |          ||
+     *   |          \/
+     * ? 4 9 7 5 2 1 6
+     *         |
+     *        walk -> less than pivot && do swap
+     *
+     *   lower    pivot
+     *     |        ||
+     *     |        \/
+     * ? 4 5 7 9 2 1 6
+     *         |
+     *        walk -> swapped && continue
+     * 
+     * ? 4 5 2 9 7 1 6
+     * 
+     *       lower pivot
+     *         |    ||
+     *         |    \/
+     * ? 4 5 2 1 7 9 6
+     *             |
+     *            walk -> swapped && continue
+     * 
+     * swap pivot to the partition "lower + 1"
+     * ? 4 5 2 1 6 9 7
      * 
      */
     if(end - start <= 1) return;
