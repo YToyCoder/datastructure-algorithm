@@ -7,6 +7,29 @@ public class BasicSort {
 
 
   /**
+   * merge sort
+   * @param <T>
+   * @param list
+   */
+  public static <T extends Comparable<T>> void merge(List<T> list){
+    doMergeSort(list, 0, list.size());
+  }
+
+  private static <T extends Comparable<T>> void doMergeSort(List<T> list, int start, int end){
+    // 
+    if(end - start <= 1) return;
+    final int mid = (start + end) / 2;
+    doMergeSort(list, start, mid);
+    doMergeSort(list, mid, end);
+
+    // do sort
+    for(int i=0; i<end; i++){
+      // 
+      insertionSort(list, start, end);
+    }
+  } 
+
+  /**
    * selection sort 
    * <p> The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning. The algorithm maintains two subarrays in a given array.
    * @param <T>
@@ -48,7 +71,17 @@ public class BasicSort {
   public static <T extends Comparable<T>>  void insertion(List<T> list){
     for(int i=1; i < list.size(); i++){
       int walk = i;
-      while(walk > 0 && list.get(walk).compareTo(list.get(walk - 1)) < 0){
+      while(walk > 0 && list.get(walk).compareTo(list.get(walk - 1)) < 0 && walk < list.size()){
+        swap(list, walk, walk - 1);
+        walk--;
+      }
+    }
+  }
+
+  private static <T extends Comparable<T>>  void insertionSort(List<T> list, int start, int end){
+    for(int i=start; i < list.size() && i < end; i++){
+      int walk = i;
+      while(walk > 0 && list.get(walk).compareTo(list.get(walk - 1)) < 0 && walk < list.size() && walk < end){
         swap(list, walk, walk - 1);
         walk--;
       }

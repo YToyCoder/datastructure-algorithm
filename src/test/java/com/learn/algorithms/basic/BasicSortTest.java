@@ -41,6 +41,11 @@ public class BasicSortTest {
     common(BasicSort::selection);
   }
 
+  @Test
+  public void mergeTest() {
+    common(BasicSort::merge);
+  }
+
   public void common(Consumer<List<Integer>> sort){
     sort.accept(case1);
     assertArrayEquals(case1.toArray(), List.of(1,2,4,9).toArray());
