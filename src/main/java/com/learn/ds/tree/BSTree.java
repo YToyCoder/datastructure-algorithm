@@ -101,12 +101,65 @@ public class BSTree<K extends Comparable<K>, V> {
     return null;
   }
 
+  public V remove(final K key){
+    return removeStandard(key);
+  }
+
+
+  /**
+   * <p>perform the standard binary search tree deletion
+   * <p>the standard binary search tree process:
+   * The important thing to note is, inorder successor is needed only when the right child is not empty. 
+   * In this particular case, inorder successor can be obtained by finding the minimum value in the right child of the node.
+   * @param key
+   * @return
+   */
+  private V removeStandard(final K key){
+    final var parentAndNode = findParentAndNode(Objects.requireNonNull(key));
+    if(Objects.isNull(parentAndNode) || Objects.isNull(parentAndNode._2)) return null;
+    final var minOfRight = findMinOf(parentAndNode._2.right);
+    if(Objects.isNull(minOfRight)){
+      // no left child
+      if(Objects.equals(root, parentAndNode._2)){
+        // root
+        root = parentAndNode._2.left;
+        root.parent = null;
+      }else{
+        if(isLeft(parentAndNode._1, parentAndNode._2))
+          parentAndNode._1.left = parentAndNode._2.left;
+        else parentAndNode._1.right = parentAndNode._2.left;
+        if(Objects.nonNull(parentAndNode._2.left))
+          parentAndNode._2.left.parent = parentAndNode._1;
+      }
+    }else {
+      // swap val and delete minOfRight
+      parentAndNode._2.val = minOfRight.val;
+      // rm minOfRight
+      final var parent = minOfRight.parent;
+      if(isLeft(parent, minOfRight)) parent.left = minOfRight.left;
+      else parent.right = minOfRight.left;
+      if(Objects.nonNull(minOfRight.left)){
+        minOfRight.left.parent = parent;
+      }
+    }
+    size--;
+    return parentAndNode._2.val;
+  }
+
+  private boolean isLeft(Node<K,V> parent, Node<K,V> node){
+    return Objects.nonNull(parent) && Objects.nonNull(node) && Objects.equals(node, parent.left);
+  }
+
+  private boolean isRight(Node<K,V> parent, Node<K,V> node){
+    return Objects.nonNull(parent) && Objects.nonNull(node) && Objects.equals(node, parent.right);
+  }
+
   /**
    * 删除key对应的节点, 如果该节点不存在直接返回null，存在则返回删除节点的val
    * @param key key值
    * @return {@link V} key 对应的 value
    */
-  public V remove(final K key){
+  private V removeOld(final K key){
     final var findParentAndNode = findParentAndNode(Objects.requireNonNull(key));
     // 空树或无节点
     if(Objects.isNull(findParentAndNode) || Objects.isNull(findParentAndNode._2)) return null;
