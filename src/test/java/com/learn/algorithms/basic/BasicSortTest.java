@@ -46,6 +46,12 @@ public class BasicSortTest {
     common(BasicSort::merge);
   }
 
+  @Test
+  public void quickTest() {
+    common(BasicSort::quick);
+    // doRun(BasicSort::quick);
+  }
+
   /**
    *            100
    *           /   \
@@ -62,6 +68,11 @@ public class BasicSortTest {
     // case1.forEach(System.out::println);
     // BasicSort.heap(case2);
     // case2.forEach(System.out::println);
+  }
+
+  private void doRun(Consumer<List<Integer>> sort){
+    // sort.accept(case1);
+    sort.accept(case2);
   }
 
   public void common(Consumer<List<Integer>> sort){

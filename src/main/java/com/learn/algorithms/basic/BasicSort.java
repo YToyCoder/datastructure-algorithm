@@ -7,6 +7,45 @@ import com.learn.utils.Heaps;
 public class BasicSort {
   private BasicSort(){}
 
+  /**
+   * quick sort
+   * @param <T>
+   * @param list
+   */
+  public static <T extends Comparable<T>> void quick(List<T> list){
+    partition(list, 0, list.size());
+    list.forEach(System.out::println);
+  }
+
+  public static <T extends Comparable<T>> void partition(List<T> list, int start, int end){
+    /**
+     * a swap example:
+     * start <------------------------> end
+     * 
+     * lower       pivot
+     * |            ||
+     * |            \/
+     * ? 7 9 4 5 2 1 6
+     *  pivot
+     *   ||
+     *   \/
+     * ? 6 9 4 5 2 1 7
+     * 
+     */
+    if(end - start <= 1) return;
+    int lower = start - 1;
+    final T pivot = list.get(end - 1);
+    for(int i=start; i < end - 1; i++){
+      if(greater(pivot, list.get(i))){ 
+        // found smaller one
+        swap(list, i, ++lower);
+      }
+    }
+    swap(list, ++lower, end - 1);
+    // do more partition
+    partition(list, start,lower);
+    partition(list, lower, end);
+  }
 
   /**
    * heap sort
