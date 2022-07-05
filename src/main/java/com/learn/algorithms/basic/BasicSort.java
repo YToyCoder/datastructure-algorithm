@@ -7,6 +7,25 @@ public class BasicSort {
 
 
   /**
+   * selection sort 
+   * <p> The selection sort algorithm sorts an array by repeatedly finding the minimum element (considering ascending order) from unsorted part and putting it at the beginning. The algorithm maintains two subarrays in a given array.
+   * @param <T>
+   * @param list
+   */
+  public static <T extends Comparable<T>> void selection(List<T> list){
+    for(int i=0; i < list.size() - 1; i++){
+      // find min element between i and list.size
+      int min = i;
+      for(int j=i + 1; j < list.size(); j++){
+        if(list.get(j).compareTo(list.get(min)) < 0){
+          min = j;
+        }
+      }
+      if(min != i) swap(list, min, i);
+    }
+  }
+
+  /**
    * bubble sort
    * @param <T>
    * @param list

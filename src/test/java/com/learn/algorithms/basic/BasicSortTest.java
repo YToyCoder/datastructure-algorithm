@@ -5,6 +5,7 @@ import static org.junit.Assert.assertArrayEquals;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 import org.junit.Test;
 
@@ -15,19 +16,35 @@ public class BasicSortTest {
 
   @Test
   public void insertionTest(){
-    BasicSort.insertion(case1);
-    assertArrayEquals(case1.toArray(), List.of(1,2,4,9).toArray());
-    BasicSort.insertion(case2);
-    final var case2arr = case2.toArray();
-    Arrays.sort(case2arr);
-    assertArrayEquals(case2.toArray(), case2arr);
+    // BasicSort.insertion(case1);
+    // assertArrayEquals(case1.toArray(), List.of(1,2,4,9).toArray());
+    // BasicSort.insertion(case2);
+    // final var case2arr = case2.toArray();
+    // Arrays.sort(case2arr);
+    // assertArrayEquals(case2.toArray(), case2arr);
+    common(BasicSort::insertion);
   }
 
   @Test
   public void bubbleTest(){
-    BasicSort.bubble(case1);
+    // BasicSort.bubble(case1);
+    // assertArrayEquals(case1.toArray(), List.of(1,2,4,9).toArray());
+    // BasicSort.bubble(case2);
+    // final var case2arr = case2.toArray();
+    // Arrays.sort(case2arr);
+    // assertArrayEquals(case2.toArray(), case2arr);
+    common(BasicSort::bubble);
+  }
+
+  @Test
+  public void selectionTest(){
+    common(BasicSort::selection);
+  }
+
+  public void common(Consumer<List<Integer>> sort){
+    sort.accept(case1);
     assertArrayEquals(case1.toArray(), List.of(1,2,4,9).toArray());
-    BasicSort.bubble(case2);
+    sort.accept(case2);
     final var case2arr = case2.toArray();
     Arrays.sort(case2arr);
     assertArrayEquals(case2.toArray(), case2arr);
