@@ -14,7 +14,6 @@ public class BasicSort {
    */
   public static <T extends Comparable<T>> void quick(List<T> list){
     partition(list, 0, list.size());
-    list.forEach(System.out::println);
   }
 
   public static <T extends Comparable<T>> void partition(List<T> list, int start, int end){
