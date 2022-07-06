@@ -52,6 +52,11 @@ public class BasicSortTest {
     // doRun(BasicSort::quick);
   }
 
+  @Test
+  public void countingTest() {
+    common(BasicSort::counting);
+  }
+
   /**
    *            100
    *           /   \

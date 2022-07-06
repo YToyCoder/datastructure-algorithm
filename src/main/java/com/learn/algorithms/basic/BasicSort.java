@@ -8,6 +8,44 @@ public class BasicSort {
   private BasicSort(){}
 
   /**
+   * counting sort
+   * @param <T>
+   * @param list
+   */
+  public static void counting(List<Integer> list) {
+    if(list.isEmpty()) return;
+    final int[] maxAndMin = maxAndmin(list);
+    final int max = list.get(maxAndMin[0]);
+    final int min = list.get(maxAndMin[1]);
+    final int range = max - min + 1;
+    final int[] counts = new int[range];
+    for(int el : list){
+      counts[el - min] += 1;
+    }
+    int walk = 0;
+    for(int index=0; index < counts.length; index++){
+      for(int opTime=0; opTime < counts[index]; opTime++){
+        list.set(walk++, index + min);
+      }
+    }
+  }
+
+  /**
+   * get the index of max node and min in list
+   * @param <T>
+   * @param list
+   * @return if not empty return [max, min], else return null
+   */
+  private static <T extends Comparable<T>> int[] maxAndmin(List<T> list){
+    if(list.isEmpty()) return null;
+    int max = 0, min = 0;
+    for(int i=0; i < list.size(); i++){
+      if(greater(list.get(i), list.get(max))) max = i;
+      if(greater(list.get(min), list.get(i))) min = i;
+    }
+    return new int[]{max, min};
+  }
+  /**
    * quick sort
    * @param <T>
    * @param list
