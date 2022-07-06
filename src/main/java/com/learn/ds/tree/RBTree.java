@@ -4,11 +4,11 @@ import java.util.Objects;
 
 public class RBTree<K extends Comparable<K>> {
   public static class Node<K> {
-    K key;
-    Node<K> parent;
-    Node<K> left;
-    Node<K> right;
-    Color color;
+    private K key;
+    private Node<K> parent;
+    private Node<K> left;
+    private Node<K> right;
+    private Color color;
     public Node(K key, Node<K> parent, Node<K> left, Node<K> right, Color color) {
       this.key = key;
       this.parent = parent;
@@ -29,8 +29,8 @@ public class RBTree<K extends Comparable<K>> {
   // tree size
   private int size = 0;
 
-  private boolean exists(K key){
-    return true;
+  public boolean exists(K key){
+    return Objects.nonNull(bstreeSearch(key));
   }
 
   public int size(){
@@ -49,9 +49,9 @@ public class RBTree<K extends Comparable<K>> {
     }
     if(Objects.isNull(root)) {
       root = new Node<>(key, null, null, null, Color.Black);
-      size++;
     }
     else insertHelper(root, new Node<>(key, null, null, null, Color.Red));
+    size++;
     return true;
   }
 
@@ -82,11 +82,11 @@ public class RBTree<K extends Comparable<K>> {
    */
   private void balancing(Node<K> node) {
     if(Objects.equals(root, node)) root.color = Color.Black;
-    if(node.parent.color.equals(Color.Black)) 
+    if(isBlack(node.parent))
       return; // parent is Black do nothing
     final Node<K> grandfather = node.parent.parent;
-    final Node<K> uncle = isLeft(grandfather, node.parent) ?  grandfather.right : grandfather.left; 
-    if(uncle.color.equals(Color.Red)) {
+    final Node<K> uncle = isLeft(grandfather, node.parent) ?  grandfather.right : grandfather.left;
+    if(isRed(uncle)) {
       uncle.color = Color.Black;
       node.parent.color = Color.Black;
       grandfather.color = Color.Red;
@@ -204,7 +204,9 @@ public class RBTree<K extends Comparable<K>> {
          *
          */
         final Node<K> parent = node.parent;
-        rightRotate(node.parent);
+        setBlack(node);
+        setRed(parent);
+        rightRotate(parent);
         balancing(parent);
       }
     }
@@ -259,7 +261,8 @@ public class RBTree<K extends Comparable<K>> {
      */
     final Node<K> rightChild = r.right;
     r.right = rightChild.left;
-    rightChild.left.parent = r;
+    if(Objects.nonNull(rightChild.left))
+      rightChild.left.parent = r;
     final Node<K> parent = r.parent;
     if(isRoot(r)) root = rightChild;
     else if(isLeft(parent, r)) parent.left = rightChild;
@@ -274,7 +277,9 @@ public class RBTree<K extends Comparable<K>> {
   }
 
   private void setBlack(Node<K> node) {
-    node.color = Color.Black;
+    // null is black
+    if(Objects.nonNull(node))
+      node.color = Color.Black;
   }
 
   /**
@@ -284,5 +289,135 @@ public class RBTree<K extends Comparable<K>> {
    */
   private boolean isRoot(Node<K> node){
     return Objects.equals(root, node);
+  }
+
+  /**
+   * delete node which key is the {@code key}
+   * @param key 
+   * @return if remove return true, else return false
+   */
+  public boolean remove(K key){
+    Node<K> searchNode = bstreeSearch(key);
+    if(Objects.isNull(searchNode)) return false;
+    size--;
+    // find the node to delete
+    final Node<K> minOfRmNodeLeftTree = minOf(searchNode.right);
+    // not root
+    final Node<K> nodeDel = Objects.isNull(minOfRmNodeLeftTree) ? searchNode : minOfRmNodeLeftTree;
+    if(isRoot(nodeDel)){ // handle root isolate
+      final Node<K> leftOfNodeDel = nodeDel.left;
+      root = leftOfNodeDel;
+      if(Objects.nonNull(leftOfNodeDel)) leftOfNodeDel.parent = null;
+      nodeDel.left = null;
+      return true;
+    }
+    if(Objects.nonNull(minOfRmNodeLeftTree)){
+      // replace key
+      searchNode.key = minOfRmNodeLeftTree.key;
+    }
+    final boolean delNodeIsBlack = isBlack(nodeDel) ;
+    final boolean replaceNIsBlack = isBlack(nodeDel.left) ;
+    final Node<K> sibling = nodeDel.parent.right;
+
+    bstreeDel(nodeDel);
+    if(!delNodeIsBlack || !replaceNIsBlack){
+      /**
+       * case :
+       * 
+       *    d(black)
+       *   /
+       *  ?(red)
+       * just delete && recolor
+       */
+      setBlack(nodeDel.left);
+    }else {
+      // both black
+      /**
+       * case 1: sibling is black and sibling has at least one red child
+       */
+      if(isBlack(sibling) && hasRedChild(sibling)){
+        // 3 case :
+        // case 1 : two red children >> left rotate && recolor(set sibling right black)
+        if(isRed(sibling.left) && isRed(sibling.right)){
+          leftRotate(sibling.parent);
+          setBlack(sibling.right);
+        }
+        // case 2 : one left child >> right rotate && left rotate && recolor
+        if(isBlack(sibling.right)){
+          setBlack(sibling.left);
+          final Node<K> siblingParent = sibling.parent;
+          rightRotate(sibling);
+          leftRotate(siblingParent);
+        }
+        // case 3 : one right child >> left rotate && recolor
+        if(isBlack(sibling.left)){
+          leftRotate(sibling.parent);
+          setBlack(sibling.right);
+        }
+      }
+    }
+    return true;
+  }
+
+  /**
+   * get the min node of subtree which root is {@code r}
+   * @param r subtree's root
+   * @return min node of r, if not exists return null
+   */
+  private Node<K> minOf(final Node<K> r){
+    if(Objects.isNull(r)) return null;
+    Node<K> walk = r;
+    while(Objects.nonNull(walk.left)) walk = walk.left;
+    return walk;
+  }
+
+  // if a node has at least one red child
+  private boolean hasRedChild(final Node<K> node){
+    return Objects.nonNull(node) && (isRed(node.left) || isRed(node.right));
+  }
+
+
+  /**
+   * perfrom the binary search tree deletion
+   * @param {@code Node} node to delete
+   */
+  private void bstreeDel(Node<K> nodeDel){
+    // it a leaf or a node with single child
+    
+    /**
+     *      nodeDel
+     *      /    \
+     *    null   ?(may exist)
+     */
+    // nodeDel will not be the root @see #remove
+    final Node<K> parent = nodeDel.parent;
+    if(isLeft(parent, nodeDel)) parent.left = nodeDel.right;
+    else parent.right = nodeDel.right;
+    if(Objects.nonNull(nodeDel.right)) nodeDel.right.parent = parent;
+    // not neccessary
+    nodeDel.parent = null;
+    nodeDel.right = null;
+  }
+
+  /**
+   * search the node which key is {@code key}
+   * @param key search key
+   * @return search result , if exist return ,else return null;
+   */
+  private Node<K> bstreeSearch(K key){
+    if(size() == 0) return null;
+    Node<K> walk = Objects.requireNonNull(root);
+    while(Objects.nonNull(walk) && walk.key.compareTo(key) != 0){
+      walk = walk.key.compareTo(key) > 0 ? walk.left : walk.right;
+    }
+    return walk;
+  }
+
+  private boolean isRed(Node<K> node){
+    return Objects.nonNull(node) && Objects.equals(node.color, Color.Red);
+  }
+
+  private boolean isBlack(Node<K> node){
+    return Objects.isNull(node) || Objects.equals(node.color, Color.Black);
   }
 }
