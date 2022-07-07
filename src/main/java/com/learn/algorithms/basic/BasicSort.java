@@ -147,7 +147,8 @@ public class BasicSort {
     int lower = start - 1;
     final T pivot = list.get(end - 1);
     for(int i=start; i < end - 1; i++){
-      if(greater(pivot, list.get(i))){ 
+      // if(greater(pivot, list.get(i))){ 
+      if(less(list.get(i), pivot)){ 
         // found smaller one
         swap(list, i, ++lower);
       }
@@ -155,13 +156,13 @@ public class BasicSort {
     swap(list, ++lower, end - 1);
     // do more partition
     partition(list, start,lower);
-    partition(list, lower, end);
+    partition(list, lower + 1, end);
   }
 
   /**
    * heap sort
    * structure:
-   *  array [0, 1, 2, 3, 4, 5, 6, ...] can be seen as follow: 
+   *  array [0, 1, 2, 3, 4, 5, 6, ...] can be seen as follow:
    *        0 
    *       / \
    *      1   2
@@ -196,6 +197,17 @@ public class BasicSort {
    */
   private static <T extends Comparable<T>> boolean greater(T a, T b) {
     return a.compareTo(b) > 0;
+  }
+
+  /**
+   * a is less than b
+   * @param <T>
+   * @param a
+   * @param b
+   * @return a < b
+   */
+  private static <T extends Comparable<T>> boolean less(T a, T b){
+    return a.compareTo(b) < 0;
   }
 
   private static <T extends Comparable<T>> void heapfyDown(List<T> list, int start, int end){
