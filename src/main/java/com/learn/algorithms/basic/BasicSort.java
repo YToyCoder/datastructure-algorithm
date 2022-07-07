@@ -2,14 +2,50 @@ package com.learn.algorithms.basic;
 
 import java.util.List;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 import com.learn.utils.Heaps;
 
 public class BasicSort {
   private BasicSort(){}
 
+  public static Logger log = LogManager.getLogger(BasicSort.class);
+
+
   /**
-   * counting sort
-   * @param <T>
+   * <p>counting sort
+   * <p>logic:
+   * arr[] = [1, 1, 4 , 5, 8, 6, 6, 9] -> max 9 min 1
+   * counting[] = [0, 0, 0, 0, 0, 0, 0, 0, 0]
+   *               1  2  3  4  5  6  7  8  9
+   * counting[] = [2, 0, 0, 1, 1, 2, 0, 1, 1]
+   * counting[] = [2, 2, 2, 3, 4, 6, 6, 7, 8]
+   * @param list
+   */
+  public static void counting2(List<Integer> list){
+    if(list.isEmpty()) return;
+    final int[] maxAndMin = maxAndmin(list);
+    final int max = list.get(maxAndMin[0]);
+    final int min = list.get(maxAndMin[1]);
+    final int range = max - min + 1;
+    final int[] counts = new int[range];
+    for(int el : list){
+      counts[el - min] += 1;
+    }
+
+    for(int i=1; i < counts.length; i++){
+      counts[i] += counts[i - 1];
+    }
+
+    final Integer[] origin = list.toArray(new Integer[0]);
+    for(int el : origin){
+      list.set(--counts[el - min], el);
+    }
+  }
+
+  /**
+   * simple counting sort
    * @param list
    */
   public static void counting(List<Integer> list) {
@@ -142,9 +178,6 @@ public class BasicSort {
     for(int i= list.size()/2 - 1; i >= 0; i--){
       heapfyDown(list, i, list.size());
     }
-    System.out.println("built");
-    list.forEach(System.out::println);
-    System.out.println("print finished");
 
     // iterate list select swap index of 0 and end, do {@code heapfyDown} from 0 to end
     for(int i=0; i < list.size(); i++){
@@ -272,6 +305,9 @@ public class BasicSort {
 
   // simple swap
   public static <T extends Comparable<T>> void swap(List<T> list, int a, int b){
+    if(list.size() <= a || list.size() <= b) 
+      // log.info(String.format("a val is %d, b val is %d, list size is %d", a, b, list.size()));
+      System.out.println((String.format("a val is %d, b val is %d, list size is %d", a, b, list.size())));
     assert a >= 0;
     assert b >= 0;
     assert list.size() > a && list.size() > b;

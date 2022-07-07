@@ -13,6 +13,7 @@ public class BasicSortTest {
 
   private static List<Integer> case1 = new ArrayList<>(List.of(2,1, 9, 4));
   private static List<Integer> case2 = new ArrayList<>(List.of(3, 7, 10 , 8 , 6, 100, 25, 16, 30 , 21));
+  private static List<Integer> case3 = new ArrayList<>(List.of(50, 100, 200, 20, 101, 300, 100, 200, 150, 27, 149, 3, 180,74));
 
   @Test
   public void insertionTest(){
@@ -55,6 +56,7 @@ public class BasicSortTest {
   @Test
   public void countingTest() {
     common(BasicSort::counting);
+    common(BasicSort::counting2);
   }
 
   /**
@@ -87,5 +89,10 @@ public class BasicSortTest {
     final var case2arr = case2.toArray();
     Arrays.sort(case2arr);
     assertArrayEquals(case2.toArray(), case2arr);
+
+    sort.accept(case3);
+    final var case3arr = case3.toArray();
+    Arrays.sort(case3arr);
+    assertArrayEquals(case3.toArray(), case3arr);
   }
 }
