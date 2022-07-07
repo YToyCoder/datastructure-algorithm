@@ -59,6 +59,20 @@ public class BasicSortTest {
     common(BasicSort::counting2);
   }
 
+  @Test
+  public void bucketTest(){
+    final var case1 = new ArrayList<>(List.of(0.12, 0.81, 0.83, 0.72, 0.72, 0.6, 0.7));
+    final var origin = new double[case1.size()];
+    for(int i=0; i < case1.size(); i++){
+      origin[i] = case1.get(i);
+    }
+    final var case1arr = Arrays.copyOf(origin, origin.length);
+    Arrays.sort(case1arr);
+    BasicSort.bucket(origin,8);
+    assertArrayEquals(case1arr, origin, 0.00001);
+    // for(int el : )
+  }
+
   /**
    *            100
    *           /   \

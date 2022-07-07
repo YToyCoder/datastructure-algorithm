@@ -1,6 +1,13 @@
 package com.learn.algorithms.basic;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
+import java.util.function.BiPredicate;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +18,49 @@ public class BasicSort {
   private BasicSort(){}
 
   public static Logger log = LogManager.getLogger(BasicSort.class);
+
+
+  /**
+   * bucket sort
+   * <p>logic :
+   * <p> 1. create n empty
+   * <p>bucketSort(arr[], n)
+   * <p>1) Create n empty buckets (Or lists).
+   * <p>2) Do following for every array element arr[i]........a) Insert arr[i] into bucket[n*array[i]]
+   * <p>3) Sort individual buckets using insertion sort.
+   * <p>4) Concatenate all sorted buckets.
+   */
+  public static void bucket(double[] ls, int n){
+    final List<List<Double>> buckets = Stream.generate(() -> new ArrayList<Double>()).limit(n).collect(Collectors.toList());
+    for(double el : ls){
+      final int location = (int)(el * n);
+      List<Double> bucket = buckets.get(location);
+      if(Objects.isNull(bucket)) buckets.set(location, (bucket = new ArrayList<>()));
+      insertInOrder(bucket, el, (a , b) -> a > b);
+    }
+
+    final List<Double> sorted = buckets.stream().flatMap(bucket -> bucket.stream()).collect(Collectors.toList());
+    for(int i=0; i < sorted.size(); i++){
+      ls[i] = sorted.get(i);
+    }
+  }
+
+  /**
+   * simpe insert sort implementation
+   * @param <T>
+   * @param ls
+   * @param target
+   * @param comparator
+   */
+  private static <T extends Comparable<T>> void insertInOrder(List<T> ls, T target, BiPredicate<T, T> comparator){
+    ls.add(target);
+    if(ls.size() <= 1) return;
+    int walk = ls.size() - 1;
+    while(walk > 0 && comparator.test(ls.get(walk - 1), ls.get(walk))){
+      swap(ls, walk, walk - 1);
+      walk--;
+    }
+  }
 
 
   /**
