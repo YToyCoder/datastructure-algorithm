@@ -224,6 +224,8 @@ public class RBTree<K extends Comparable<K>> {
     final Node<K> leftChild = r.left;
     // 
     r.left = leftChild.right;
+    if(Objects.nonNull(leftChild.right))
+      leftChild.right.parent = r;
     leftChild.right.parent = r;
     final Node<K> parent = r.parent;
     if(isRoot(r)) root = leftChild;

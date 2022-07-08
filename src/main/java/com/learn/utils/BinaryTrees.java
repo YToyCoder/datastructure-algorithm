@@ -57,7 +57,8 @@ public class BinaryTrees {
       final BinaryTreeNode<K,V> leftChild = r.left;
       // 
       r.left = leftChild.right;
-      leftChild.right.parent = r;
+      if(Objects.nonNull(leftChild.right))
+        leftChild.right.parent = r;
       final BinaryTreeNode<K,V> parent = r.parent;
       if(isRoot(r)) setRoot(leftChild);
       else if(isLeft(parent, r)) parent.left = leftChild;
