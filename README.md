@@ -9,11 +9,39 @@ java leetcode 算法练习
 
 - Heap (堆)
 
-堆是一种特殊的树形数据结构，并且是一个完全二叉树。堆分为`大根堆`和`小根堆`.
+堆的应用:
+
+1. Heap Sort 
+
+2. Priority Queue
+
+3. Graph Algorithms
+
+4. problem
+
+> K'th Largest Element in an array
+
+> Sort an almost sorted array
+
+> Merge K Sorted Arrays
+
+堆(Binary Heap)是一种特殊的树形数据结构，并且是一个完全二叉树。堆分为`大根堆`和`小根堆`.
 
 MaxHeap(大根堆) : 父节点的key值必须大于其任何子节点的key值。
 
 MinHea(小根堆) : 父节点的key值必须小于其任何子节点的key值。
+
+小根堆的操作:
+
+1) getMini() 将返回小根堆的root节点。时间复杂度是$O(1)$
+
+2) extractMin() 从小根堆里面移除最小节点，时间复杂度是$O(log n)$
+
+3) decreaseKey() 减小某个节点的key的值。该操作的时间复杂度是$O(log n)$，如果减小的值比父节点的key值大不做任何操作，否则向上迭代修复二叉树.
+
+4) insert() 插入一个新的key节点需要花费$O(log n)$时间复杂度。该方法会将该节点插入树的末尾，如果该节点大于父节点不需要做任何事，否则需要从该节点向上迭代修复被破坏的树的属性。
+
+5) delete() 删除节点需要花费$O(log n)$ 的时间复杂度。删除节点时通过`decreaseKey`将节点的值减小为mini，那么mini就会被迭代到root，最后执行extactMin就完成了该节点的删除.
 
 ```
         小根堆                    大根堆
@@ -24,6 +52,11 @@ MinHea(小根堆) : 父节点的key值必须小于其任何子节点的key值。
     /   \   /   \             /  \    /  \
   40    50 100  40          10    15 50  40
 ```
+
+二叉堆的主要应用是优先队列。
+
+二项堆(Binomial Heap) 是一种堆结构。与二叉堆相比，其优势是可以快速合并两个堆，因此它属于可合并堆(Mergeable Heap)数据结构的一种.
+
 
 - List (链表)
 
