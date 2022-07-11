@@ -264,3 +264,22 @@ Red Black Tree (红黑树)
 8. UniqueMorseRepresentations
 
 9. UniquePaths
+
+
+- zuo (左程云)
+
+1. 判断一个二叉树是否是搜索二叉树
+
+- 判断是否满足 `left-key < node-key < right-key`
+
+- 中序遍历放入数组，数组是按照节点升序排列，比较数组是否符合该条件(构建该数组时可以递归也可以使用循环) 
+
+> 代码位置 
+
+> src/main/java/com/learn/algorithms/zuo/BST#isBST
+
+> src/main/java/com/learn/algorithms/zuo/BST#isBST2
+
+2. 判断一个二叉树是否是完全二叉树
+
+- 进行广度优先搜索，判断是否存在前序节点是不存在两个子节点和当前节点是否是不存在left但存在right的情况
