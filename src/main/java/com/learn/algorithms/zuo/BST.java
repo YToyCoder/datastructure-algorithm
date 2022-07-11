@@ -83,4 +83,35 @@ public class BST {
   }
 
 
+  /**
+   * 判断二叉树是否是平衡树
+   * @param node
+   * @return
+   */
+  public static boolean isBalanced(BSTNode node){
+    return checkIfBalance(node).isBalanced;
+  }
+
+  public static BalanceResult checkIfBalance(BSTNode node){
+    if(Objects.isNull(node)) 
+      return new BalanceResult(true, 0);
+    BalanceResult leftResult = checkIfBalance(node.left);
+    BalanceResult rightResult = checkIfBalance(node.right);
+    int height = Math.max(leftResult.height, rightResult.height) + 1;
+    boolean isBalanced = leftResult.isBalanced && rightResult.isBalanced && Math.abs(leftResult.height - rightResult.height) < 2;
+    return new BalanceResult(isBalanced, height);
+  }
+
+  static class BalanceResult{
+
+    public boolean isBalanced;
+    public int height;
+
+    public BalanceResult(boolean isBalanced, int height){
+      this.isBalanced= isBalanced;
+      this.height = height;
+    }
+
+  }
+
 }
