@@ -1,8 +1,10 @@
 package com.learn.algorithms.zuo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -112,6 +114,42 @@ public class BST {
       this.height = height;
     }
 
+  }
+
+  /**
+   *找到两个节点的公共最低祖先
+   * @return
+   */
+  public static BSTNode lowestCommonAncestor(BSTNode root, BSTNode a, BSTNode b){
+    if(Objects.isNull(a) || Objects.isNull(b)) return null;
+    Map<BSTNode,BSTNode> fatherMap = new HashMap<>();
+    fatherMap.put(root, root);
+    setFatherMap(root, fatherMap);
+    List<BSTNode> a2rootList = new ArrayList<>();
+    List<BSTNode> b2rootList = new ArrayList<>();
+
+    a2rootList.add(a);
+    while(!Objects.equals(a, fatherMap.get(a))){
+      a = fatherMap.get(a);
+      a2rootList.add(a);
+    }
+    while(!Objects.equals(b, fatherMap.get(b))){
+      b = fatherMap.get(b);
+      b2rootList.add(b);
+    }
+    final int minWalkLen = Math.min(a2rootList.size(), b2rootList.size());
+    for(int i=0; i < minWalkLen; i++){
+      if(Objects.equals(a2rootList.get(i), b2rootList.get(i))) return a2rootList.get(i);
+    }
+    return null;
+  }
+
+  private static void setFatherMap(BSTNode root, Map<BSTNode, BSTNode> fatherMap) {
+    if(Objects.isNull(root)) return;
+    if(Objects.nonNull(root.right)) fatherMap.put(root.right, root);
+    if(Objects.nonNull(root.left)) fatherMap.put(root.left, root);
+    setFatherMap(root.left, fatherMap);
+    setFatherMap(root.right, fatherMap);
   }
 
 }
