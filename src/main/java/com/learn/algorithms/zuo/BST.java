@@ -121,7 +121,7 @@ public class BST {
    * @return
    */
   public static BSTNode lowestCommonAncestor(BSTNode root, BSTNode a, BSTNode b){
-    if(Objects.isNull(a) || Objects.isNull(b)) return null;
+    if(Objects.isNull(a) || Objects.isNull(b) || Objects.isNull(root)) return null;
     Map<BSTNode,BSTNode> fatherMap = new HashMap<>();
     fatherMap.put(root, root);
     setFatherMap(root, fatherMap);
@@ -150,6 +150,19 @@ public class BST {
     if(Objects.nonNull(root.left)) fatherMap.put(root.left, root);
     setFatherMap(root.left, fatherMap);
     setFatherMap(root.right, fatherMap);
+  }
+
+  //version 2
+  public static BSTNode lowestCommonAncestor2(BSTNode root, BSTNode a, BSTNode b){
+    if(
+      Objects.isNull(root) || 
+      Objects.equals(root, a) ||
+      Objects.equals(root, b)
+    ) return root;
+    BSTNode left = lowestCommonAncestor(root.left, a, b);
+    BSTNode right = lowestCommonAncestor(root.right, a, b);
+    if(Objects.nonNull(left) && Objects.nonNull(right)) return root;
+    return Objects.isNull(left) ? right : left;
   }
 
 }
