@@ -175,3 +175,21 @@ Red Black Tree (红黑树)
 41. ZigzgConversion
 
 - hard
+
+1. BusiestServers
+
+2. FindSubstring
+
+3. FirstMissingPositive
+
+4. MedianofTwoSortedArrays
+
+5. RangeModule
+
+6. ReachingPoint
+
+7. Trap
+
+8. UniqueMorseRepresentations
+
+9. UniquePaths
