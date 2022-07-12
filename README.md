@@ -98,6 +98,14 @@ AVL Tree (二叉平衡树)
 
 Red Black Tree (红黑树)
 
+- Graph (图)
+
+图是一个非线性数据结构。图是一个由多个节点和多个边组成的结构。节点有时也称为顶点，边是线或弧用于连接两个节点。
+
+> 定义:
+> A Graph consists of a finite set of vertices(or nodes) and set of Edges which connect a pair of nodes.
+> 图是有限的边（连接两个节点）将有限的节点连接起来的结构。
+
 
 ### algorithms
 
