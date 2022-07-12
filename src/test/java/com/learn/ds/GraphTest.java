@@ -1,6 +1,7 @@
 package com.learn.ds;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,5 +28,11 @@ public class GraphTest {
       allNodes.add(el);
     });
     assertEquals(8, allNodes.size());
+    List<Integer> nodes = new ArrayList<>();
+    graph.dfTraversal(1, el -> {
+      nodes.add(el);
+    });
+    assertEquals(nodes.size(), allNodes.size());
+    assertTrue("contain", nodes.containsAll(allNodes));
   }
 }

@@ -45,6 +45,34 @@ public class Graph {
     }
   }
 
+  /**
+   * 深度优先搜索
+   * @param start
+   * @param nodeHandler
+   */
+  public void dfTraversal(int start, Consumer<Integer> nodeHandler){
+    if(!containNode(start)) return;
+    Set<Integer> visited = new HashSet<>();
+    deepVisit(start, nodeHandler, visited);
+    for(int el : nodes){
+      if(!visited.contains(el)){
+        deepVisit(el, nodeHandler, visited);
+      }
+    }
+  }
+
+  private void deepVisit(int start, Consumer<Integer> nodeHandler, Set<Integer> visited) {
+    nodeHandler.accept(start);
+    visited.add(start);
+    Set<Integer> ts = edges.get(start);
+    if(Objects.nonNull(ts) && !ts.isEmpty()){
+      for(int el : ts){
+        if(!visited.contains(el))
+          deepVisit(el, nodeHandler, visited);
+      }
+    }
+  }
+
   // source
   // [from, to]
   public static Graph create(int[][] source){
