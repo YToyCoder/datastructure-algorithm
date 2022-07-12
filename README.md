@@ -210,6 +210,26 @@ from [求有向图边的分类分别是什么意思？](https://www.zhihu.com/qu
 
 ****
 
+- Hashing Data Structure (hash结构数据)
+
+Hashing 是一种通过hash函数将键值对的映射存储在hash表的技术。这样的技术是用于更快的访问容器的元素，映射的速度取决于使用的hash函数。
+
+基本操作:
+
+1. HashTable : 创建hash表
+
+2. Delete : 从hash表中删除特定的key-value(键值对)
+
+3. Put : 获取hash表中特定的key对应的值
+
+4. DeleteHashTable : 删除hash表
+
+Hashing重要的组件:
+
+HashTable : 用于存储键值对
+
+Hash function : 将key转化成实际的int值
+
 ### algorithms
 
 - basic sort
