@@ -58,6 +58,8 @@ MinHea(小根堆) : 父节点的key值必须小于其任何子节点的key值。
 二项堆(Binomial Heap) 是一种堆结构。与二叉堆相比，其优势是可以快速合并两个堆，因此它属于可合并堆(Mergeable Heap)数据结构的一种.
 
 
+****
+
 - List (链表)
 
 链表和数组很相似都是线性的, 但是也有不同点.数组的元素是存储在连续的内存区域，而链表的元素存储的位置却不一定是连续的。链表是通过指针将一个一个元素连接起来的。
@@ -97,6 +99,8 @@ Binary Search Tree(二叉搜索树)
 AVL Tree (二叉平衡树)
 
 Red Black Tree (红黑树)
+
+****
 
 - Graph (图)
 
@@ -158,7 +162,45 @@ Red Black Tree (红黑树)
 1. 广度优先遍历
 
 
+****
+
 2. 深度优先遍历
+
+from [Bill Thies](http://people.csail.mit.edu/thies/6.046-web/recitation9.txt)
+
+Edge Classification
+
+1. Tree edge:  encounter new (white) vertex
+   - gray to white
+2. Back edge: from descendent to ancestor
+   - gray to gray
+3. Forward edge:  nontree edge from ancestor to descendent
+   - gray to black
+4. cross edge:  remainder - betweeen trees or sub-trees
+   - gray to black
+
+
+from [求有向图边的分类分别是什么意思？](https://www.zhihu.com/question/20003218)
+
+我们在做dfs的时候，当访问到一个节点时，会出现四种情况：
+
+1.此节点未被访问过，则此次的访问关系边（发起点——>接受点）称为树边（tree edge）；
+
+2.此节点被访问过但此节点的子孙还没访问完，换句话说，此次的发起点的源头可以追溯到接收点，则此次访问关系边称为后向边（back edge）；
+
+3.此节点被访问过且此节点的子孙已经访问完，而且发起点是搜索初始边，则称为前向边（down edge）；
+
+4.此节点被访问过且此节点的子孙已经访问完，而且发起点不是搜索初始边，则称为横叉边（cross edge）
+
+深度优先搜索应用: 
+
+1. Topological Sort (拓扑排序)
+
+2. Detecting cycle in graph (查找环)
+
+3. Path Find (路径查找)
+
+> 过程: 进行深度优先搜索( a -> z ) ，通过栈保存`a`到当前节点的路径，当遇到`z`时返回保存的路径。
 
 *实现*: 
 
@@ -166,6 +208,7 @@ Red Black Tree (红黑树)
 
 2. src/main/java/com/learn/ds/graph/Graph
 
+****
 
 ### algorithms
 
@@ -333,6 +376,8 @@ Red Black Tree (红黑树)
 
 9. UniquePaths
 
+
+****
 
 - zuo (左程云)
 
