@@ -180,6 +180,30 @@ Edge Classification
    - gray to black
 
 
+```
+DFS(G)
+  for each vertex u in V[G]
+    do color[u] <- WHITE
+       pi[u] <- NIL
+  time <- 0
+  for each vertex u \in V[G]
+    do if color[u] = WHITE
+       then DFS-VISIT(u)
+
+DFS-VISIT(u)
+  color[u] <- GRAY
+  time <- time + 1
+  d[u] <- time
+  for each v \in Adj[u]
+    do if color[v] = WHITE
+      then pi[v] <- u
+           DFS-VISIT(v)
+ color[u] <- BLACK
+ f[u] <- time + 1
+ time <- time + 1
+```
+
+
 from [求有向图边的分类分别是什么意思？](https://www.zhihu.com/question/20003218)
 
 我们在做dfs的时候，当访问到一个节点时，会出现四种情况：
