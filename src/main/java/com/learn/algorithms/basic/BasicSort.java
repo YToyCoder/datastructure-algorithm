@@ -1,6 +1,7 @@
 package com.learn.algorithms.basic;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import java.util.function.BiPredicate;
@@ -16,6 +17,47 @@ public class BasicSort {
   private BasicSort(){}
 
   public static Logger log = LogManager.getLogger(BasicSort.class);
+
+  /**
+   * radix sort
+   * 
+   * [0, 30, 81, 22, 31, 12]
+   * [0, 30, 81, 31, 22, 12]
+   * [0, 12, 22, 30, 31, 81]
+   * @param <T>
+   * @param ls
+   */
+  public static void radix(int[] arr){
+    final int[] maxAndMin = maxAndMin(arr);
+    final int max = arr[maxAndMin[0]];
+    for(int exp=1; max/exp > 0; exp *= 10){
+      counting(arr, exp, max, maxAndMin[1]);
+    }
+  }
+
+  static void counting(int[] arr, int n, int max, int min){
+    final int[] counts = new int[10]; 
+    for(int el : arr){
+      int indexInCounts = (el / n) % 10;
+      counts[indexInCounts]++;
+    }
+    for(int i=1; i<10; i++) counts[i] += counts[i - 1];
+    final int[] copy = Arrays.copyOf(arr, arr.length);
+    for(int i=arr.length - 1; i >= 0; i--){
+      int indexInCounts = (copy[i] / n) % 10;
+      arr[--counts[indexInCounts]] = copy[i];
+    } 
+  }
+
+  static int[] maxAndMin(int[] arr){
+    int max = 0;
+    int min = 0;
+    for(int i=0; i < arr.length; i++){
+      if(arr[i] > arr[max]) max = i;
+      if(arr[i] < arr[min]) min = i;
+    }
+    return new int[]{max, min};
+  }
 
 
   /**

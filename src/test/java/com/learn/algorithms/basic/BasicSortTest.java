@@ -73,6 +73,26 @@ public class BasicSortTest {
     // for(int el : )
   }
 
+  static int[] intcase1 = new int[] { 2,1, 9, 4 };
+  static int[] intcase2 = new int[] { 3, 7, 10 , 8 , 6, 100, 25, 16, 30 , 21 };
+  static int[] intcase3 = new int[] { 50, 100, 200, 20, 101, 300, 100, 200, 150, 27, 149, 3, 180,74 };
+  @Test
+  public void radixSort() {
+    final int[] icc1 = Arrays.copyOf(intcase1, intcase1.length);
+    final int[] icc2 = Arrays.copyOf(intcase2, intcase2.length);
+    final int[] icc3 = Arrays.copyOf(intcase3, intcase3.length);
+    // case 1
+    BasicSort.radix(icc1);
+    Arrays.sort(intcase1);
+    assertArrayEquals(intcase1, icc1);
+    BasicSort.radix(icc2);
+    Arrays.sort(intcase2);
+    assertArrayEquals(intcase2, icc2);
+    BasicSort.radix(icc3);
+    Arrays.sort(intcase3);
+    assertArrayEquals(intcase3, icc3);
+  }
+
   /**
    *            100
    *           /   \
