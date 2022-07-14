@@ -9,13 +9,16 @@ import com.learn.algorithms.leetcode.easy.MinBitFlips;
 import com.learn.algorithms.leetcode.easy.NextGreatestLetter;
 import com.learn.algorithms.leetcode.easy.NumWays;
 import com.learn.algorithms.leetcode.easy.NumberOfLines;
+import com.learn.algorithms.leetcode.hard.RangeModule;
 import com.learn.algorithms.leetcode.medium.ConvertTime;
 import com.learn.algorithms.leetcode.medium.Divide;
+import com.learn.algorithms.leetcode.medium.FourSum;
 import com.learn.algorithms.leetcode.medium.Insert;
 import com.learn.algorithms.leetcode.medium.Jump;
 import com.learn.algorithms.leetcode.medium.MinDeletion;
 import com.learn.algorithms.leetcode.medium.MinEatingSpeed;
 import com.learn.algorithms.leetcode.medium.SortColors;
+import com.learn.algorithms.leetcode.medium.WordFilter;
 
 import org.junit.Test;
 
@@ -164,5 +167,42 @@ public class LeetcodeTest extends TestCase {
 		var case3 = new int[]{0,2,2,2,0,2,1,1};
 		code.sortColors(case3);
 		assertArrayEquals("0,2,2,2,0,2,1,1", new int[]{0,0,1,1,2,2,2,2}, case3);
+	}
+
+	public void testRangeModule(){
+		final var code = new RangeModule();
+		code.addRange(10, 20);
+		code.removeRange(14, 16);
+		assertTrue("range(10, 14) is in it", code.queryRange(10, 14));
+		Integer integer = code.map().get(16);
+		System.out.println(integer);
+	}
+
+	public void testRangeModule2(){
+		final var code = new RangeModule();
+		code.addRange(6, 8);
+		code.removeRange(7, 8);
+		code.removeRange(8, 9);
+		code.addRange(8, 9);
+		code.removeRange(1, 3);
+		code.addRange(1, 8);
+		assertTrue("range(10, 14) is in it", code.queryRange(10, 14));
+		Integer integer = code.map().get(16);
+		System.out.println(integer);
+	}
+
+	@Test
+	public void testFourSum() {
+		final var code = new FourSum();
+		final var res  = code.fourSum(new int[] {1,0,-1,0, -2, 2}, 0);
+		System.out.println(res);
+	}
+
+	@Test
+	public void testWordFilter() {
+		final var code = new WordFilter(new String[]{"abbba", "abba"});
+		assertEquals(1, 
+		code.f("ab", "ba")
+		);
 	}
 }
