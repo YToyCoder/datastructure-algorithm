@@ -145,7 +145,6 @@ public class LinkedList<T> {
 		if(iterator.hasNext()) sb.append(iterator.next());
 		while(iterator.hasNext())
 			sb.append(",").append(iterator.next());
-		int len = sb.length();
 		sb.append("]");
 		return sb.toString();
 	}
