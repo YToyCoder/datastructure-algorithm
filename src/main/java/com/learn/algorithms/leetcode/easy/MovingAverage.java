@@ -1,23 +1,25 @@
 package com.learn.algorithms.leetcode.easy;
 
-import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class MovingAverage {
   int size;
-  ArrayList<Integer> elements;
-  
-    /** Initialize your data structure here. */
+  double sum;
+  Queue<Integer> queue;
+
   public MovingAverage(int size) {
     this.size = size;
+    queue = new LinkedList<>();
   }
   
   public double next(int val) {
-    elements.add(val);
-    final int needPlus = Math.min(size, elements.size());
-    double sum = 0;
-    for(int i=0; i < needPlus; i++){
-      sum += elements.get(elements.size() - i - 1);
+    sum += val;
+    queue.add(val);
+    if(queue.size() > size){
+      int head = queue.poll();
+      sum -= head;
     }
-    return sum / needPlus;
+    return sum / queue.size();
   }
 }
