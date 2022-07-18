@@ -274,6 +274,14 @@ Hash function : 将key转化成实际的int值
 
 *实现： src/main/java/com/learn/algorithms/basic/BasicSort*
 
+- Bits (位运算)
+
+1. multiply
+
+通过位操作实现两数之和
+
+*方法: `if b & 1 == 1 , a * b = a * 2 * (b - 1) / 2 + a else a * b = a * 2 * b / 2`*
+
 ### leetcode
 
 - easy
