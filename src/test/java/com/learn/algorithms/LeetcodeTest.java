@@ -5,6 +5,7 @@ import static org.junit.Assert.assertArrayEquals;
 import com.learn.algorithms.book.CountAndSay;
 import com.learn.algorithms.book.LowerBound;
 import com.learn.algorithms.book.RemoveElement;
+import com.learn.algorithms.leetcode.easy.IsIsomorphic;
 import com.learn.algorithms.leetcode.easy.MinBitFlips;
 import com.learn.algorithms.leetcode.easy.NextGreatestLetter;
 import com.learn.algorithms.leetcode.easy.NumWays;
@@ -204,5 +205,11 @@ public class LeetcodeTest extends TestCase {
 		assertEquals(1, 
 		code.f("ab", "ba")
 		);
+	}
+
+	@Test
+	public void testIsomorphic() {
+		final var code = new IsIsomorphic();
+		assertFalse("isIsomorphic", code.isIsomorphic("badc", "baba"));
 	}
 }
