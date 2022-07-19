@@ -49,6 +49,8 @@ public class Multiply {
    * b     3456
    */
   public String add(String a, String b){
+    if(a.length() == 1 && Objects.equals(a.charAt(0), '0')) return b;
+    if(b.length() == 1 && Objects.equals(b.charAt(0), '0')) return a;
     final int maxLen = Math.max(a.length(), b.length());
     StringBuilder strBuilder = new StringBuilder();
     int carry = 0;

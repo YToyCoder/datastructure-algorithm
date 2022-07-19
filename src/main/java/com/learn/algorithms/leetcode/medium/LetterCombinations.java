@@ -31,7 +31,7 @@ public class LetterCombinations {
 			}
 			
 		}
-		return (LinkedList)queue;
+		return (List<String>) queue;
 	}
 	
 	static Map<Character, List<String>> keys;

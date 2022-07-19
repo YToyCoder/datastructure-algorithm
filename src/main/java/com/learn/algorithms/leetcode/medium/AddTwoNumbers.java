@@ -1,13 +1,6 @@
 package com.learn.algorithms.leetcode.medium;
 
 public class AddTwoNumbers {
-	
-	public static void main(String[] args) {
-		ListNode l1 = new ListNode(2,new ListNode(4,new ListNode(3,null)));
-		ListNode l2 = new ListNode(5,new ListNode(6,new ListNode(4,null)));
-		ListNode res = addTwoNumbers(l1,l2);
-	}
-
 
 	/** Description:
 	 * You are given two non-empty linked lists representing two non-negative integers. The digits are stored in reverse order, and each of their nodes contains a single digit. Add the two numbers and return the sum as a linked list.

@@ -1,6 +1,5 @@
 package com.learn.algorithms.leetcode.medium;
 
-import java.util.Arrays;
 
 /**
  * 
@@ -20,12 +19,7 @@ import java.util.Arrays;
 public class NumSubarrayProductLessThanK {
 
 	public int numSubarrayProductLessThanK(int[] nums, int k) {
-		int count = 0;
-		for(int i=0; i<nums.length; i++) {
-			if(i == 0 || nums[i-1] != nums[i]){
-			}
-		}
-		return count;
+		return 0;
 	}
 
 	
