@@ -61,15 +61,17 @@ public class RangeModule {
     return Objects.nonNull(range) && inRange(left, right, range);
   }
   
+  // <-- range.key --- left -- right -- range.value -->
   private boolean inRange(final int left, final int right, Map.Entry<Integer, Integer> range){
-    return (range.getKey() <= left ) && ( range.getValue() >= right);
+    // more readable
+    return range.getKey() <= left && right <= range.getValue();
   }
   
   public void removeRange(int left, int right) {
     NavigableMap<Integer, Integer> includeRange = ranges.subMap(left, false, right, false);
     if(!includeRange.isEmpty()){
       // last range
-      final var lastEntry = ranges.lastEntry();
+      final var lastEntry = includeRange.lastEntry();
       for(int key : includeRange.keySet().toArray(new Integer[0])){
         ranges.remove(key);
       }
