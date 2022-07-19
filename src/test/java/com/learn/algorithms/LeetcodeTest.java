@@ -18,6 +18,7 @@ import com.learn.algorithms.leetcode.medium.Insert;
 import com.learn.algorithms.leetcode.medium.Jump;
 import com.learn.algorithms.leetcode.medium.MinDeletion;
 import com.learn.algorithms.leetcode.medium.MinEatingSpeed;
+import com.learn.algorithms.leetcode.medium.Multiply;
 import com.learn.algorithms.leetcode.medium.SortColors;
 import com.learn.algorithms.leetcode.medium.WordFilter;
 
@@ -211,5 +212,22 @@ public class LeetcodeTest extends TestCase {
 	public void testIsomorphic() {
 		final var code = new IsIsomorphic();
 		assertFalse("isIsomorphic", code.isIsomorphic("badc", "baba"));
+	}
+
+	@Test
+	public void testMulti() {
+		final var code = new  Multiply();
+		assertEquals(Integer.toString(Integer.parseInt("10469") + Integer.parseInt("12891")), code.add("10469", "12891"));
+		assertEquals(Integer.toString(8 + 810), code.add("8", "810"));
+		assertEquals(Integer.toString(81 + 810), code.add("81", "810"));
+		assertEquals(Integer.toString(Integer.parseInt("121893") * 9), code.multi('9', "121893"));
+		assertEquals(Integer.toString(Integer.parseInt("121893") * 0), code.multi('0', "121893"));
+		assertEquals(Integer.toString(Integer.parseInt("121893") * 0), code.multi('9', "0"));
+		assertEquals(Integer.toString(120), code.multiTen("12", 1));
+		assertEquals(Integer.toString(12), code.multiTen("12", 0));
+		assertEquals(Integer.toString(0), code.multiTen("0", 10));
+		assertEquals(Integer.toString(9 * 98), code.multiply("98", "9"));
+		assertEquals(Integer.toString(999 * 9), code.multiply("999", "9"));
+		assertEquals(Integer.toString(999 * 0), code.multiply("999", "0"));
 	}
 }
