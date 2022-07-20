@@ -666,6 +666,43 @@ A中的元素大小在[0, N-1]之间。
 链接：https://leetcode.cn/problems/find-all-anagrams-in-a-string
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
+49. MyCalendar
+
+记录一个有意思的答案
+
+```java
+class MyCalendarTwo {
+    TreeMap<Integer, Integer> cnt;
+
+    public MyCalendarTwo() {
+        cnt = new TreeMap<Integer, Integer>();
+    }
+
+    public boolean book(int start, int end) {
+        int ans = 0;
+        int maxBook = 0;
+        cnt.put(start, cnt.getOrDefault(start, 0) + 1);
+        cnt.put(end, cnt.getOrDefault(end, 0) - 1);
+        for (Map.Entry<Integer, Integer> entry : cnt.entrySet()) {
+            int freq = entry.getValue();
+            maxBook += freq;
+            ans = Math.max(maxBook, ans);
+            if (maxBook > 2) {
+                cnt.put(start, cnt.getOrDefault(start, 0) - 1);
+                cnt.put(end, cnt.getOrDefault(end, 0) + 1);
+                return false;
+            }
+        }
+        return true;
+    }
+}
+
+// 作者：LeetCode-Solution
+// 链接：https://leetcode.cn/problems/my-calendar-ii/solution/wo-de-ri-cheng-an-pai-biao-ii-by-leetcod-wo6n/
+// 来源：力扣（LeetCode）
+// 著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+```
+
 
 - hard
 
