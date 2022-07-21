@@ -765,6 +765,26 @@ AB -> 28
 
 *swap(i, len - i - 1)*
 
+32. reverseList (反转链表)
+
+给你单链表的头节点 head ，请你反转链表，并返回反转后的链表。
+
+```java
+
+  public ListNode reverseList(ListNode head) {
+    ListNode walk = head;
+    ListNode temp = new ListNode();
+    while(Objects.nonNull(walk)){
+      ListNode next = temp.next;
+      temp.next = walk;
+      walk = walk.next;
+      temp.next.next = next;
+    }
+    return temp.next;
+  }
+
+```
+
 
 
 *解法: 排序+计数*
