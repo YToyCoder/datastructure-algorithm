@@ -264,15 +264,297 @@ Hash function : 将key转化成实际的int值
 
 - basic sort
 
+排序算法的稳定性:  假定在待排序的记录序列中，存在多个具有相同的关键字的记录，若经过排序，这些记录的相对次序保持不变，即在原序列中，ri=rj，且ri在rj之前，而在排序后的序列中，ri仍在rj之前，则称这种排序算法是稳定的；否则称为不稳定的。
+
 1. bubble sort (冒泡排序)
+
+```java
+
+public static <T extends Comparable<T>> void bubble(List<T> list){
+  for(int i = 0; i < list.size() - 1; i++){
+    for(int j=0; j < list.size() - i - 1; j++){
+      if(list.get(j).compareTo(list.get(j + 1)) > 0){
+        swap(list, j, j + 1);
+      }
+    }
+  }
+}
+```
+
 2. quick sort (快排)
+
+```java
+
+  public static <T extends Comparable<T>> void quick(List<T> list){
+    partition(list, 0, list.size());
+  }
+
+  public static <T extends Comparable<T>> void partition(List<T> list, int start, int end){
+    /**
+     * a swap example:
+     * start <------------------------> end
+     * 
+     * lower       pivot
+     * |            ||
+     * |            \/
+     * ? 7 9 4 5 2 1 6
+     *     |
+     *    walk
+     * 
+     * lower       pivot
+     * |            ||
+     * |            \/
+     * ? 7 9 4 5 2 1 6
+     *       |
+     *      walk -> less than pivot && do swap
+     *  
+     *  lower      pivot
+     *   |          ||
+     *   |          \/
+     * ? 4 9 7 5 2 1 6
+     *       |
+     *      walk -> swapped && continue
+     * 
+     *  lower      pivot
+     *   |          ||
+     *   |          \/
+     * ? 4 9 7 5 2 1 6
+     *         |
+     *        walk -> less than pivot && do swap
+     *
+     *   lower    pivot
+     *     |        ||
+     *     |        \/
+     * ? 4 5 7 9 2 1 6
+     *         |
+     *        walk -> swapped && continue
+     * 
+     * ? 4 5 2 9 7 1 6
+     * 
+     *       lower pivot
+     *         |    ||
+     *         |    \/
+     * ? 4 5 2 1 7 9 6
+     *             |
+     *            walk -> swapped && continue
+     * 
+     * swap pivot to the partition "lower + 1"
+     * ? 4 5 2 1 6 9 7
+     * 
+     */
+    if(end - start <= 1) return;
+    int lower = start - 1;
+    final T pivot = list.get(end - 1);
+    for(int i=start; i < end - 1; i++){
+      // if(greater(pivot, list.get(i))){ 
+      if(less(list.get(i), pivot)){ 
+        // found smaller one
+        swap(list, i, ++lower);
+      }
+    }
+    swap(list, ++lower, end - 1);
+    // do more partition
+    partition(list, start,lower);
+    partition(list, lower + 1, end);
+  }
+
+```
 3. heap sort (堆排序)
+
+```java
+
+  public static <T extends Comparable<T>> void heap(List<T> list){
+    // build the heap
+    for(int i= list.size()/2 - 1; i >= 0; i--){
+      heapfyDown(list, i, list.size());
+    }
+
+    // iterate list select swap index of 0 and end, do {@code heapfyDown} from 0 to end
+    for(int i=0; i < list.size(); i++){
+      final int end = list.size()  - i;
+      swap(list, 0, end - 1);
+      heapfyDown(list, 0, end - 1);
+    }
+  }
+
+
+  private static <T extends Comparable<T>> void heapfyDown(List<T> list, int start, int end){
+    int walk = start;
+    int leftChild = Heaps.leftChild(walk), rightChild = Heaps.rightChild(walk);
+    while(
+      walk < end && 
+      ( 
+        (leftChild < end && greater(list.get(leftChild), list.get(walk))) || 
+        (rightChild < end && greater(list.get(rightChild), list.get(walk)))
+      )
+    ){
+      // swap with child 
+      final int betterChild = 
+        leftChild < end && 
+        (rightChild >= end || greater(list.get(leftChild), list.get(rightChild))) 
+        ? leftChild : 
+          rightChild ;
+      swap(list, walk, betterChild);
+      walk = betterChild;
+      leftChild = Heaps.leftChild(walk);
+      rightChild = Heaps.rightChild(walk);
+    }
+  }
+
+```
+
 4. selection sort (选择排序)
+
+```java
+
+  public static <T extends Comparable<T>> void selection(List<T> list){
+    for(int i=0; i < list.size() - 1; i++){
+      // find min element between i and list.size
+      int min = i;
+      for(int j=i + 1; j < list.size(); j++){
+        if(list.get(j).compareTo(list.get(min)) < 0){
+          min = j;
+        }
+      }
+      if(min != i) swap(list, min, i);
+    }
+  }
+
+```
+
 5. insert sort (插入排序)
+
+```java
+
+  public static <T extends Comparable<T>>  void insertion(List<T> list){
+    for(int i=1; i < list.size(); i++){
+      int walk = i;
+      while(walk > 0 && list.get(walk).compareTo(list.get(walk - 1)) < 0 && walk < list.size()){
+        swap(list, walk, walk - 1);
+        walk--;
+      }
+    }
+  }
+
+```
+
 6. merge sort (归并排序)
+
+```java
+
+  public static <T extends Comparable<T>> void merge(List<T> list){
+    doMergeSort(list, 0, list.size());
+  }
+
+  private static <T extends Comparable<T>> void doMergeSort(List<T> list, int start, int end){
+    // 
+    if(end - start <= 1) return;
+    final int mid = (start + end) / 2;
+    doMergeSort(list, start, mid);
+    doMergeSort(list, mid, end);
+
+    // do sort
+    for(int i=0; i<end; i++){
+      // use insertion sort 
+      insertionSort(list, start, end);
+    }
+  } 
+
+```
 7. counting sort (计数排序)
+
+```java
+
+  public static void counting2(List<Integer> list){
+    if(list.isEmpty()) return;
+    final int[] maxAndMin = maxAndmin(list);
+    final int max = list.get(maxAndMin[0]);
+    final int min = list.get(maxAndMin[1]);
+    final int range = max - min + 1;
+    final int[] counts = new int[range];
+    for(int el : list){
+      counts[el - min] += 1;
+    }
+
+    for(int i=1; i < counts.length; i++){
+      counts[i] += counts[i - 1];
+    }
+
+    final Integer[] origin = list.toArray(new Integer[0]);
+    for(int el : origin){
+      list.set(--counts[el - min], el);
+    }
+  }
+
+```
+
 8. bucket sort (桶排序)
+
+```java
+
+  public static void bucket(double[] ls, int n){
+    final List<List<Double>> buckets = Stream.generate(() -> new ArrayList<Double>()).limit(n).collect(Collectors.toList());
+    for(double el : ls){
+      final int location = (int)(el * n);
+      List<Double> bucket = buckets.get(location);
+      if(Objects.isNull(bucket)) buckets.set(location, (bucket = new ArrayList<>()));
+      insertInOrder(bucket, el, (a , b) -> a > b);
+    }
+
+    final List<Double> sorted = buckets.stream().flatMap(bucket -> bucket.stream()).collect(Collectors.toList());
+    for(int i=0; i < sorted.size(); i++){
+      ls[i] = sorted.get(i);
+    }
+  }
+
+```
+
 9. radix sort (基数排序)
+
+```java
+
+  public static void radix(int[] arr){
+    final int[] maxAndMin = maxAndMin(arr);
+    final int max = arr[maxAndMin[0]];
+    for(int exp=1; max/exp > 0; exp *= 10){
+      counting(arr, exp, max, maxAndMin[1]);
+    }
+  }
+
+  static void counting(int[] arr, int n, int max, int min){
+    final int[] counts = new int[10]; 
+    for(int el : arr){
+      int indexInCounts = (el / n) % 10;
+      counts[indexInCounts]++;
+    }
+    for(int i=1; i<10; i++) counts[i] += counts[i - 1];
+    final int[] copy = Arrays.copyOf(arr, arr.length);
+    for(int i=arr.length - 1; i >= 0; i--){
+      int indexInCounts = (copy[i] / n) % 10;
+      arr[--counts[indexInCounts]] = copy[i];
+    } 
+  }
+
+```
+
+按照时间复杂度大致分为3类：
+  时间复杂度 O(n^2) ：选泡插：选择排序、冒泡排序、插入排序
+  时间复杂度 O(nlogn) ：快归希堆：快速排序、归并排序、希尔排序、堆排序
+  时间复杂度 O(n) ：桶计基：桶排序、计数排序、基数排序
+
+| algorithm | avg | best | worst | space |  sort-way | is stable? |
+| -- | -- | -- | -- | -- | -- | -- |
+| bubble  | $O(n ^ 2)$| $O(n)$ | $O(n ^ 2)$ | $O(1)$ | In-place | true |
+| select  | $O(n ^ 2)$| $O(n ^ 2)$ | $O(n ^ 2)$ | $O(1)$ | In-place | false |
+| insert  | $O(n ^ 2)$| $O(n)$ | $O(n ^ 2)$ | $O(1)$ | In-place | true |
+| shell   | $O(n \log n)$| $O(n \log^2n)$ | $O(n \log ^ 2n)$ | $O(1)$ | In-place | false |
+| merge   | $O(n \log n)$| $O(n \log n)$ | $O(n \log n)$ | $O(n)$ | Out-place | true |
+| quick   | $O(n \log n)$| $O(n \log n)$ | $O(n ^ 2)$ | $O(\log n)$ | In-place | false |
+| heap    | $O(n \log n)$| $O(n \log n)$ | $O(n \log n)$ | $O(1)$ | In-place | false |
+| counting| $O(n + k)$| $O(n + k)$ | $O(n + k)$ | $O(k)$ | Out-place | true |
+| bucket  | $O(n + k)$| $O(n + k)$ | $O(n ^ 2)$ | $O(n + k)$ | Out-place | true |
+| radix   | $O(n  k)$| $O(n  k)$ | $O(n k)$ | $O(n + k)$ | Out-place | true |
+
 
 *实现： src/main/java/com/learn/algorithms/basic/BasicSort*
 
