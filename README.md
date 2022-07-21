@@ -538,8 +538,11 @@ public static <T extends Comparable<T>> void bubble(List<T> list){
 ```
 
 按照时间复杂度大致分为3类：
+
   时间复杂度 O(n^2) ：选泡插：选择排序、冒泡排序、插入排序
+
   时间复杂度 O(nlogn) ：快归希堆：快速排序、归并排序、希尔排序、堆排序
+
   时间复杂度 O(n) ：桶计基：桶排序、计数排序、基数排序
 
 | algorithm | avg | best | worst | space |  sort-way | is stable? |
@@ -757,6 +760,10 @@ AB -> 28
 来源：力扣（LeetCode）
 链接：https://leetcode.cn/problems/shift-2d-grid
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+31. reverseString (反转字符串)
+
+*swap(i, len - i - 1)*
 
 
 
