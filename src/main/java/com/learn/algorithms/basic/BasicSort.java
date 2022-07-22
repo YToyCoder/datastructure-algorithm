@@ -18,6 +18,31 @@ public class BasicSort {
 
   public static Logger log = LogManager.getLogger(BasicSort.class);
 
+
+  /**
+   * shell sort
+   * @param <T>
+   * @param array
+   */
+  public static <T extends Comparable<T>> void shell(List<T> array){
+    final int length = array.size();
+    int gap = 1;
+    while(gap < length / 3){
+      gap = 3 * gap + 1;
+    }
+
+    for(; gap > 0; gap /= 3){
+      for(int i = gap; i < length; i++){
+        int j;
+        T temp = array.get(i);
+        for(j = i; j >= gap && less(temp, array.get(j -gap)); j -= gap){
+          array.set(j, array.get(j - gap));
+        }
+        array.set(j, temp);
+      }
+    }
+  }
+
   /**
    * radix sort
    * 

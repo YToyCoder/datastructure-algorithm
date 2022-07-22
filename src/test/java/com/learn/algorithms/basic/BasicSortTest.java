@@ -16,6 +16,11 @@ public class BasicSortTest {
   private static List<Integer> case3 = new ArrayList<>(List.of(50, 100, 200, 20, 101, 300, 100, 200, 150, 27, 149, 3, 180,74));
 
   @Test
+  public void shellSortTest(){
+    common(BasicSort::shell);
+  }
+
+  @Test
   public void insertionTest(){
     // BasicSort.insertion(case1);
     // assertArrayEquals(case1.toArray(), List.of(1,2,4,9).toArray());

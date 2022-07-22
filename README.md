@@ -537,6 +537,31 @@ public static <T extends Comparable<T>> void bubble(List<T> list){
 
 ```
 
+10. shell-sort (希尔排序)
+
+```java
+
+  public static <T extends Comparable<T>> void shell(List<T> array){
+    final int length = array.size();
+    int gap = 1;
+    while(gap < length / 3){
+      gap = 3 * gap + 1;
+    }
+
+    for(; gap > 0; gap /= 3){
+      for(int i = gap; i < length; i++){
+        int j;
+        T temp = array.get(i);
+        for(j = i; j >= gap && less(temp, array.get(j -gap)); j -= gap){
+          array.set(j, array.get(j - gap));
+        }
+        array.set(j, temp);
+      }
+    }
+  }
+
+```
+
 按照时间复杂度大致分为3类：
 
   时间复杂度 O(n^2) ：选泡插：选择排序、冒泡排序、插入排序
