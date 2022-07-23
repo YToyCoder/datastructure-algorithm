@@ -19,6 +19,7 @@ import com.learn.algorithms.leetcode.medium.Jump;
 import com.learn.algorithms.leetcode.medium.MinDeletion;
 import com.learn.algorithms.leetcode.medium.MinEatingSpeed;
 import com.learn.algorithms.leetcode.medium.Multiply;
+import com.learn.algorithms.leetcode.medium.SequenceReconstruction;
 import com.learn.algorithms.leetcode.medium.SortColors;
 import com.learn.algorithms.leetcode.medium.WordFilter;
 
@@ -229,5 +230,10 @@ public class LeetcodeTest extends TestCase {
 		assertEquals(Integer.toString(9 * 98), code.multiply("98", "9"));
 		assertEquals(Integer.toString(999 * 9), code.multiply("999", "9"));
 		assertEquals(Integer.toString(999 * 0), code.multiply("999", "0"));
+	}
+
+	@Test
+	public void testSequenceReconstruction(){
+		new SequenceReconstruction().sequenceReconstruction(new int[]{1, 2, 3}, new int[][]{{1,2}, {1,3}, {2,3}});
 	}
 }
