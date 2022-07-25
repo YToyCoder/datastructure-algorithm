@@ -894,6 +894,12 @@ AB -> 28
 链接：https://leetcode.cn/problems/remove-one-element-to-make-the-array-strictly-increasing
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
+41. isPalindrome (回文链表)
+
+给你一个单链表的头节点 head ，请你判断该链表是否为回文链表。如果是，返回 true ；否则，返回 false 。
+
+*快慢指针 + 反转链表*
+
 
 *解法: 排序+计数*
 
