@@ -1236,6 +1236,14 @@ CBTInserter.get_root() 将返回树的头节点。
 链接：https://leetcode.cn/problems/complete-binary-tree-inserter
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
+58. combine (组合)
+
+给定两个整数 n 和 k，返回范围 [1, n] 中所有可能的 k 个数的组合。
+
+你可以按 任何顺序 返回答案。
+
+*回溯(递归)+剪枝*
+
 - hard
 
 1. BusiestServers
