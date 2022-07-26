@@ -101,6 +101,15 @@ Red Black Tree (红黑树)
 
 Segment Tree (线段树)
 
+- skiplist (跳表)
+
+跳表是一种随机化的数据结构，可以被看做二叉树的一个变种，它在性能上和红黑树、\texttt{AVL}AVL 树不相上下，但是跳表的原理非常简单，目前在 \texttt{Redis}Redis 和 \texttt{LevelDB}LevelDB 中都有用到。跳表的期望空间复杂度为 O(n)O(n)，跳表的查询，插入和删除操作的期望时间复杂度均为 O(\log n)O(logn)。跳表实际为一种多层的有序链表，跳表的每一层都为一个有序链表，且满足每个位于第 ii 层的节点有 pp 的概率出现在第 i+1i+1 层，其中 pp 为常数。
+
+作者：LeetCode-Solution
+链接：https://leetcode.cn/problems/design-skiplist/solution/she-ji-tiao-biao-by-leetcode-solution-e8yh/
+来源：力扣（LeetCode）
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+
 ****
 
 - Graph (图)
@@ -1281,6 +1290,26 @@ CBTInserter.get_root() 将返回树的头节点。
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
 *二分查找*
+
+61. compress (压缩字符串)
+
+给你一个字符数组 chars ，请使用下述算法压缩：
+
+从一个空字符串 s 开始。对于 chars 中的每组 连续重复字符 ：
+
+如果这一组长度为 1 ，则将字符追加到 s 中。
+否则，需要向 s 追加字符，后跟这一组的长度。
+压缩后得到的字符串 s 不应该直接返回 ，需要转储到字符数组 chars 中。需要注意的是，如果组长度为 10 或 10 以上，则在 chars 数组中会被拆分为多个字符。
+
+请在 修改完输入数组后 ，返回该数组的新长度。
+
+你必须设计并实现一个只使用常量额外空间的算法来解决此问题。
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/string-compression
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*双指针*
 
 
 - hard
