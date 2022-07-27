@@ -11,6 +11,7 @@ import com.learn.algorithms.leetcode.easy.NextGreatestLetter;
 import com.learn.algorithms.leetcode.easy.NumWays;
 import com.learn.algorithms.leetcode.easy.NumberOfLines;
 import com.learn.algorithms.leetcode.hard.RangeModule;
+import com.learn.algorithms.leetcode.hard.Skiplist;
 import com.learn.algorithms.leetcode.medium.ConvertTime;
 import com.learn.algorithms.leetcode.medium.Divide;
 import com.learn.algorithms.leetcode.medium.FourSum;
@@ -235,5 +236,16 @@ public class LeetcodeTest extends TestCase {
 	@Test
 	public void testSequenceReconstruction(){
 		new SequenceReconstruction().sequenceReconstruction(new int[]{1, 2, 3}, new int[][]{{1,2}, {1,3}, {2,3}});
+	}
+
+	@Test
+	public void testSkipList(){
+		var code = new Skiplist();
+		code.add(1);
+		code.add(2);
+		code.add(3);
+		code.add(3);
+		code.erase(3);
+		code.search(0);
 	}
 }
