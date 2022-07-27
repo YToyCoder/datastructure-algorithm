@@ -911,6 +911,11 @@ AB -> 28
 
 42. validMountainArray 有效的山脉数组
 
+44. sumOfLeftLeaves (左叶子之和)
+
+给定二叉树的根节点 root ，返回所有左叶子之和。
+ 
+
 
 *解法: 排序+计数*
 
