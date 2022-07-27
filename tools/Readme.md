@@ -6,10 +6,12 @@ use example
 
 `python diff.py fileName tag`
 
+```
 tools
-|-- Readme.md
-|-- data.txt
-`-- diff.py
+|-- Readme.md 
+|-- data.txt 
+`-- diff.py 
+```
 
 data.txt content
 
