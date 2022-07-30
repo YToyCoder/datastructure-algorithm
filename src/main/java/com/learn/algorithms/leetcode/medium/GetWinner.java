@@ -19,11 +19,11 @@ public class GetWinner {
   public int getWinner(int[] arr, int k) {
     int count = 0;
     int walk = 0;
-    while(count < k && count <= arr.length){
+    while(count < k && walk < arr.length){
       count = swap(arr, walk) ? 1 + count : 1;
-      walk = (walk + 1) % arr.length;
+      walk = walk + 1;
     }
-    return arr[walk];
+    return arr[walk % arr.length];
   }
 
   boolean swap(int[] arr, final int i){
