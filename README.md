@@ -1538,6 +1538,20 @@ bool erase(int num): 在跳表中删除一个值，如果 num 不存在，直�
 链接：https://leetcode.cn/problems/design-skiplist
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
+13. bfTraverse (按公因数计算最大组件大小)
+
+给定一个由不同正整数的组成的非空数组 nums ，考虑下面的图：
+
+有 nums.length 个节点，按从 nums[0] 到 nums[nums.length - 1] 标记；
+只有当 nums[i] 和 nums[j] 共用一个大于 1 的公因数时，nums[i] 和 nums[j]之间才有一条边。
+返回 图中最大连通组件的大小 。
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/largest-component-size-by-common-factor
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*dfs*
+
 ****
 
 - zuo (左程云)
