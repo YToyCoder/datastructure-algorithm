@@ -17,27 +17,15 @@ package com.learn.algorithms.leetcode.medium;
 public class GetWinner {
   
   public int getWinner(int[] arr, int k) {
-    int count = 0;
-    int walk = 0;
+    int count = 1;
+    int walk = 2;
+    int max = Math.max(arr[0], arr[1]);
     while(count < k && walk < arr.length){
-      count = swap(arr, walk) ? 1 + count : 1;
+      count = max > arr[walk] ? count + 1 : 1;
+      max = Math.max(max, arr[walk]);
       walk = walk + 1;
     }
-    return arr[walk % arr.length];
+    return max;
   }
 
-  boolean swap(int[] arr, final int i){
-    final int len = arr.length;
-    int next = i + 1;
-    if(i == len - 1){
-      next = 0;
-    }
-    if(arr[i] > arr[next]){
-      int temp = arr[next];
-      arr[next] = arr[i];
-      arr[i] = temp;
-      return true;
-    }
-    return false;
-  }
 }
