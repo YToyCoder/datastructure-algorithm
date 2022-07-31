@@ -1445,6 +1445,16 @@ CBTInserter.get_root() 将返回树的头节点。
 链接：https://leetcode.cn/problems/find-the-winner-of-an-array-game
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
+67. maxLevelSum (最大层内元素和)
+
+给你一个二叉树的根节点 root。设根节点位于二叉树的第 1 层，而根节点的子节点位于第 2 层，依此类推。
+
+请返回层内元素之和 最大 的那几层（可能只有一层）的层号，并返回其中 最小 的那个。
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/maximum-level-sum-of-a-binary-tree
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
 
 - hard
 
