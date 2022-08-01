@@ -34,7 +34,7 @@ public class GenerateParenthesis {
     return tocache;
   }
 
-  // 广度优先搜索
+  // 深度优先搜索
   // reference 
   // 这一类问题是在一棵隐式的树上求解，可以用深度优先遍历，也可以用广度优先遍历。
   // 一般用深度优先遍历。原因是：
