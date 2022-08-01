@@ -22,9 +22,9 @@ public class CanIWin {
   private int dfs(int state, int sum){
     if(store[state] != 0) return store[state];
     for(int i=0; i < n; i++){
-      if((state >> i & 1 ) != 1){
-        if(sum + i + 1>= total) return store[state] = 1; 
-        if(dfs(state | (1 << i), sum + i + 1) == -1) return store[state] = 1;
+      if((state >> i & 1 ) != 1){ // 没有被选过的才会再次选择
+        if(sum + i + 1>= total) return store[state] = 1; // 判断自己是否能赢
+        if(dfs(state | (1 << i), sum + i + 1) == -1) return store[state] = 1; // 判断对手是否能赢
       }
     }
     return store[state] = -1;
