@@ -997,6 +997,10 @@ boolean empty() 如果栈是空的，返回 true ；否则，返回 false 。
 
 52. 最长回文串
 
+53. invertTree (翻转二叉树)
+
+给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
+
 - medium
 
 1. AddTwoNumbers
