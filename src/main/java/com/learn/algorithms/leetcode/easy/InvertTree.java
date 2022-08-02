@@ -1,5 +1,8 @@
 package com.learn.algorithms.leetcode.easy;
 
+import com.learn.utils.TreeNode;
+import java.util.Objects;
+
 public class InvertTree {
 
   public TreeNode invertTree(TreeNode root) {
