@@ -989,6 +989,10 @@ boolean empty() 如果栈是空的，返回 true ；否则，返回 false 。
 
 *解法: 排序+计数*
 
+50. DeleteNode
+
+*删除链表结点*
+
 - medium
 
 1. AddTwoNumbers
