@@ -1001,6 +1001,34 @@ boolean empty() 如果栈是空的，返回 true ；否则，返回 false 。
 
 给你一棵二叉树的根节点 root ，翻转这棵二叉树，并返回其根节点。
 
+54. wordPattern (单词规律)
+
+给定一种规律 pattern 和一个字符串 s ，判断 s 是否遵循相同的规律。
+
+这里的 遵循 指完全匹配，例如， pattern 里的每个字母和字符串 s 中的每个非空单词之间存在着双向连接的对应规律。
+
+ 
+
+示例1:
+
+输入: pattern = "abba", s = "dog cat cat dog"
+输出: true
+示例 2:
+
+输入:pattern = "abba", s = "dog cat cat fish"
+输出: false
+示例 3:
+
+输入: pattern = "aaaa", s = "dog cat cat dog"
+输出: false
+ 
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/word-pattern
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*HashTable*
+
 - medium
 
 1. AddTwoNumbers
