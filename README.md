@@ -993,6 +993,9 @@ boolean empty() 如果栈是空的，返回 true ；否则，返回 false 。
 
 *删除链表结点*
 
+51. isPowerOfFour
+
+
 - medium
 
 1. AddTwoNumbers
