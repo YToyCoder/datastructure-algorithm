@@ -12,10 +12,9 @@ public class IsMatch {
     final int n = p.length();
     final boolean[][] matches = new boolean[m + 1][n + 1];
     matches[0][0] = true;
-    int match = 0; // match position
     for(int i=1; i<=n; i++){
       if(Objects.equals(p.charAt(i - 1), '*'))
-        matches[0][i] = true;
+        matches[0][i] = matches[0][i - 2];
       else break;
     }
     for(int i=1; i<=m; i++){
