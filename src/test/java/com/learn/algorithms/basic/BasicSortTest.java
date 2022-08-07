@@ -98,6 +98,10 @@ public class BasicSortTest {
     assertArrayEquals(intcase3, icc3);
   }
 
+  static class Radix_sort_tests{
+
+  }
+
   /**
    *            100
    *           /   \

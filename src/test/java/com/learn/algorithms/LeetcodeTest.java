@@ -191,16 +191,13 @@ public class LeetcodeTest extends TestCase {
 		code.addRange(8, 9);
 		code.removeRange(1, 3);
 		code.addRange(1, 8);
-		assertTrue("range(10, 14) is in it", code.queryRange(10, 14));
-		Integer integer = code.map().get(16);
-		System.out.println(integer);
+		assertFalse("range(10, 14) is in it", code.queryRange(10, 14));
 	}
 
 	@Test
 	public void testFourSum() {
 		final var code = new FourSum();
 		final var res  = code.fourSum(new int[] {1,0,-1,0, -2, 2}, 0);
-		System.out.println(res);
 	}
 
 	@Test
