@@ -2,15 +2,15 @@
 import itertools
 import sys
 
-def toList(source: str) -> list[str]:
+def toList(source: str, split=",") -> list[str]:
   removeHeadAndTail = source[1 : len(source) - 1]
-  return list(itertools.takewhile(lambda x : len(str.strip(x)) > 0, removeHeadAndTail.split(",")))
+  return list(itertools.takewhile(lambda x : len(str.strip(x)) > 0, removeHeadAndTail.split(split)))
 
-def getDiff(a : str, b : str, ops : str, opsData : str) -> list:
-  lsA = toList(a)
-  lsB = toList(b)
-  lsOps = toList(ops)
-  lsOpsD = toList(opsData)
+def getDiff(a : str, b : str, ops : str, opsData : str, split: str = ",") -> list:
+  lsA = toList(a, split)
+  lsB = toList(b, split)
+  lsOps = toList(ops, split)
+  lsOpsD = toList(opsData, split)
   ans = []
   minLen = min(len(lsA), len(lsB))
   for index in range(0, min(len(lsA), len(lsB))):
@@ -50,9 +50,9 @@ def getData(file : str, tag : str) :
         read = True
   return ans
 
-def showDiff(file : str, tag : str):
+def showDiff(file : str, tag : str, split: str = ","):
   data = getData(file, tag)
-  diffs = getDiff(data[2], data[3], data[0], data[1])
+  diffs = getDiff(data[2], data[3], data[0], data[1], split)
   for el in diffs:
     print(el)
 
@@ -62,4 +62,8 @@ if __name__ == "__main__":
   else :
     file = sys.argv[1]
     tag = sys.argv[2]
-    showDiff(file, tag)
+    if len(sys.argv) >= 3:
+      split = sys.argv[3]
+      showDiff(file, tag, split)
+    else:
+      showDiff(file, tag)
