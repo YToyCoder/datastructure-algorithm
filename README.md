@@ -1662,6 +1662,21 @@ t = t1 + t2 + ... + tm
 链接：https://leetcode.cn/problems/exclusive-time-of-functions
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
+78. findSubstringInWraproundString (环绕字符串中唯一的子字符串)
+
+把字符串 s 看作 "abcdefghijklmnopqrstuvwxyz" 的无限环绕字符串，所以 s 看起来是这样的：
+
+"...zabcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcd...." 。
+现在给定另一个字符串 p 。返回 s 中 不同 的 p 的 非空子串 的数量 。 
+
+ 
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/unique-substrings-in-wraparound-string
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*动态规划*
+
 - hard
 
 1. BusiestServers
