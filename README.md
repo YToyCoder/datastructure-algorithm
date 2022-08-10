@@ -1689,6 +1689,20 @@ t = t1 + t2 + ... + tm
 链接：https://leetcode.cn/problems/solve-the-equation
 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
 
+80. corpFlightBookings
+
+这里有 n 个航班，它们分别从 1 到 n 进行编号。
+
+有一份航班预订表 bookings ，表中第 i 条预订记录 bookings[i] = [firsti, lasti, seatsi] 意味着在从 firsti 到 lasti （包含 firsti 和 lasti ）的 每个航班 上预订了 seatsi 个座位。
+
+请你返回一个长度为 n 的数组 answer，里面的元素是每个航班预定的座位总数。
+
+来源：力扣（LeetCode）
+链接：https://leetcode.cn/problems/corporate-flight-bookings
+著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+
+*差分*
+
 - hard
 
 1. BusiestServers
