@@ -46,4 +46,15 @@ public class Medium {
     );
   }
 
+
+  public int[] corpFlightBookings(int[][] bookings, int n) {
+    final int[] ans = new int[n];
+    for(int[] booking : bookings){
+      for(int air=booking[0]; air <= booking[1]; air++){
+        ans[air - 1] += booking[2];
+      }
+    }
+    return ans;
+  }
+
 }
