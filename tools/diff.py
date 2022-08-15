@@ -33,7 +33,7 @@ class DiffRes:
     self.same = same
 
   def __str__(self) -> str:
-    return f"{self.index : 04} {self.a : >10} {self.b: >10} {self.op: >10} {self.opData: >10} { '' if self.same else '*'}"
+    return f"{self.index : 04} {self.a : >10} {self.b: >10} {self.op: >20} {self.opData: >10} { '' if self.same else '*'}"
 
 def getData(file : str, tag : str) :
   ans = []
@@ -62,7 +62,7 @@ if __name__ == "__main__":
   else :
     file = sys.argv[1]
     tag = sys.argv[2]
-    if len(sys.argv) >= 3:
+    if len(sys.argv) > 3:
       split = sys.argv[3]
       showDiff(file, tag, split)
     else:
