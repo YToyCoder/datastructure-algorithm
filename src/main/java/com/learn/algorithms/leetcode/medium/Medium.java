@@ -113,4 +113,101 @@ public class Medium {
     return mapper.values().stream().flatMap(el -> el.stream()).toList();
   }
 
+  // 设计实现双端队列。
+
+  // 实现 MyCircularDeque 类:
+
+  // MyCircularDeque(int k) ：构造函数,双端队列最大为 k 。
+  // boolean insertFront()：将一个元素添加到双端队列头部。 如果操作成功返回 true ，否则返回 false 。
+  // boolean insertLast() ：将一个元素添加到双端队列尾部。如果操作成功返回 true ，否则返回 false 。
+  // boolean deleteFront() ：从双端队列头部删除一个元素。 如果操作成功返回 true ，否则返回 false 。
+  // boolean deleteLast() ：从双端队列尾部删除一个元素。如果操作成功返回 true ，否则返回 false 。
+  // int getFront() )：从双端队列头部获得一个元素。如果双端队列为空，返回 -1 。
+  // int getRear() ：获得双端队列的最后一个元素。 如果双端队列为空，返回 -1 。
+  // boolean isEmpty() ：若双端队列为空，则返回 true ，否则返回 false  。
+  // boolean isFull() ：若双端队列满了，则返回 true ，否则返回 false 。
+
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/design-circular-deque
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  static class MyCircularDeque {
+    private final int[] arr;
+    private int head_pointer;
+    private int tail_pointer;
+
+    public MyCircularDeque(int k) {
+      arr = new int[k];
+      reset();
+    }
+
+
+    private int next_tail(){
+      return (tail_pointer + 1) % arr.length;
+    }
+
+    private int next_head() {
+      return (head_pointer - 1 + arr.length) % arr.length;
+    }
+
+    // do - 1
+    private int move_forward(int i){
+      return (i - 1 + arr.length) % arr.length;
+    }
+
+    private int move_back(int i){
+      return (i + 1) % arr.length;
+    }
+
+    private void reset(){
+      head_pointer = tail_pointer = -1;
+    }
+    
+    public boolean insertFront(int value) {
+      if(isFull()) return false;
+      if(isEmpty()) arr[head_pointer = tail_pointer = next_head()] = value;
+      else
+        arr[head_pointer = next_head()] = value;
+      return true;
+    }
+    
+    public boolean insertLast(int value) {
+      if(isFull()) return false;
+      if(isEmpty()) arr[head_pointer = tail_pointer = next_tail()] = value;
+      else arr[tail_pointer = next_tail()] = value;
+      return true;
+    }
+    
+    public boolean deleteFront() {
+      if(isEmpty()) return false;
+      if(head_pointer == tail_pointer)
+        reset();
+      else head_pointer = move_back(head_pointer);
+      return true;
+    }
+    
+    public boolean deleteLast() {
+      if(isEmpty()) return false;
+      if(tail_pointer == head_pointer)
+        reset();
+      else tail_pointer = move_forward(tail_pointer);
+      return true;
+    }
+    
+    public int getFront() {
+      return isEmpty() ? -1 : arr[head_pointer];
+    }
+    
+    public int getRear() {
+      return isEmpty() ? -1 : arr[tail_pointer];
+    }
+    
+    public boolean isEmpty() {
+      return head_pointer == -1;
+    }
+    
+    public boolean isFull() {
+      return next_tail() == head_pointer;
+    }
+  }
+
 }
