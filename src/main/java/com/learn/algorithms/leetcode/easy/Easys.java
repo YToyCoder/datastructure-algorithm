@@ -1,6 +1,7 @@
 package com.learn.algorithms.leetcode.easy;
 
 import java.util.LinkedList;
+import java.util.Objects;
 import java.util.Queue;
 
 public class Easys {
@@ -57,6 +58,40 @@ public class Easys {
       .append(chars, 0, chars.length - 1).toString();
     }
     return !digits.isEmpty() || !als.isEmpty() ? "" : String.valueOf(chars);
+  }
+
+
+  public int isPrefixOfWord(String sentence, String searchWord) {
+    int search_walk = 0;
+    int word_count = 0;
+    final char[] sentence_chars = sentence.toCharArray();
+    for(int i=0; i<sentence_chars.length; i++){
+      
+
+      if(
+        search_walk != -1 && 
+        Objects.equals(sentence_chars[i], searchWord.charAt(search_walk))
+      ) {
+        search_walk++;
+        if(search_walk == searchWord.length())
+          return word_count;
+      } else if(
+        search_walk != -1 && 
+        !Objects.equals(sentence_chars[i], searchWord.charAt(search_walk))
+      ) search_walk = -1;
+
+      if(i == 0 && !Objects.equals(sentence_chars[i], ' '))
+        word_count++;
+      else if(
+        i + 1 < sentence_chars.length && 
+        Objects.equals(sentence_chars[i], ' ') && 
+        !Objects.equals(sentence_chars[i + 1], ' ')
+      ){
+        word_count++;
+        search_walk = 0;
+      }
+    }
+    return -1;
   }
 
 }
