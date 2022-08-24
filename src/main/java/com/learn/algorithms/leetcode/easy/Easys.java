@@ -1,6 +1,9 @@
 package com.learn.algorithms.leetcode.easy;
 
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -92,6 +95,17 @@ public class Easys {
       }
     }
     return -1;
+  }
+
+
+  public boolean canBeEqual(int[] target, int[] arr) {
+    Arrays.sort(target);
+    Arrays.sort(arr);
+    for(int i=0; i<target.length; i++){
+      if(target[i] != arr[i])
+        return false;
+    }
+    return true;
   }
 
 }
