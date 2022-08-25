@@ -1,5 +1,6 @@
 package com.learn.algorithms.leetcode.medium;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -269,6 +270,41 @@ public class Medium {
     while(start < nums.length && nums[start] >= k)
       left_position[start++] = -1;
     return start;
+  }
+
+
+  public List<Integer> findClosestElements(int[] arr, int k, int x) {
+    int closest_element_index = findClosestElement(arr, x);
+    int left = closest_element_index, right = closest_element_index + 1;
+    List<Integer> ans = new ArrayList<>(k);
+    while(ans.size() < k){
+      if(left == -1)
+        ans.add(arr[right++]);
+      else if(right == arr.length)
+        ans.add(arr[left--]);
+      else {
+        if(Math.abs(arr[left] - x) > Math.abs(arr[right] - x)){
+          ans.add(arr[right++]);
+        }else ans.add(arr[left--]);
+      }
+    }
+    ans.sort((a, b) -> a - b);
+    return ans;
+  }
+
+  // 找到res, 使得arr[res - 1] >= x and arr[res + 1] > x
+  private int findClosestElement(int[] arr, int x){
+    if(arr[0] >= x) return 0;
+    else if(arr[arr.length - 1] <= x) return arr.length - 1;
+    int left = 0;
+    int right = arr.length;
+    int medium = (left + right) >> 1;
+    while(arr[medium] > x || (medium < arr.length && arr[medium + 1] <= x)){
+      if(arr[medium] > x) right = medium;
+      else left = medium;
+      medium = (left + right) >> 1;
+    }
+    return medium;
   }
 
 
