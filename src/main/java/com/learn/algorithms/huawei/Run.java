@@ -1,9 +1,13 @@
 package com.learn.algorithms.huawei;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.PriorityQueue;
+import java.util.Set;
 import java.util.Stack;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import com.learn.utils.ListNode;
 import com.learn.utils.TreeNode;
@@ -119,4 +123,65 @@ public class Run {
     return ans;
   }
 
+  // 503. 下一个更大元素 II
+  // 给定一个循环数组 nums （ nums[nums.length - 1] 的下一个元素是 nums[0] ），返回 nums 中每个元素的 下一个更大元素 。
+  // 数字 x 的 下一个更大的元素 是按数组遍历顺序，这个数字之后的第一个比它更大的数，这意味着你应该循环地搜索它的下一个更大的数。如果不存在，则输出 -1 。
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/next-greater-element-ii
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public int[] nextGreaterElements(int[] nums) {
+    final int len = nums.length;
+    Stack<Integer> stack = new Stack<>();
+    int[] ans = new int[nums.length];
+    for(int i=len * 2 - 1; i>=0; i--){
+      int rl = i % len;
+      if(
+        !stack.isEmpty() &&
+        nums[rl] >= nums[stack.peek()]
+      ){
+        while(!stack.isEmpty() && nums[rl] >= nums[stack.peek()])
+          stack.pop();
+        ans[rl] = stack.isEmpty() ? -1 : nums[stack.peek()]; 
+      }else ans[rl] = nums[(rl + 1) % len];
+      stack.add(rl);
+    }
+    return ans;
+  }
+
+
+  // * 并查集
+  // 547. 省份数量  
+  // 有 n 个城市，其中一些彼此相连，另一些没有相连。如果城市 a 与城市 b 直接相连，且城市 b 与城市 c 直接相连，那么城市 a 与城市 c 间接相连。
+  // 省份 是一组直接或间接相连的城市，组内不含其他没有相连的城市。
+  // 给你一个 n x n 的矩阵 isConnected ，其中 isConnected[i][j] = 1 表示第 i 个城市和第 j 个城市直接相连，而 isConnected[i][j] = 0 表示二者不直接相连。
+  // 返回矩阵中 省份 的数量。
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/number-of-provinces
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public int findCircleNum(int[][] isConnected) {
+    int[] set = new int[isConnected.length];
+    // init
+    for(int i=0; i<set.length; i++){
+      set[i] = i;
+    }
+    for(int i=0; i < isConnected.length; i++){
+      for(int j=0; j<isConnected[i].length; j++){
+        if(isConnected[i][j] == 1)
+          union(set, i, j);
+      }
+    }
+    int provinces = 0;
+    for(int i=0; i<set.length; i++){
+      if(set[i] == i)provinces++;
+    }
+    return provinces;
+  }
+
+  private void union(int[] set, int i, int j){
+    set[find(set, i)] = find(set, j);
+  }
+
+  private int find(int[] set, int index){
+    return set[index] == index ? index : find(set, set[index]);
+  }
 }
