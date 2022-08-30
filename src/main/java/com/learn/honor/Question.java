@@ -1,7 +1,13 @@
 package com.learn.honor;
 
 import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 import java.util.Scanner;
+import java.util.StringTokenizer;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class Question {
 
@@ -56,7 +62,56 @@ public class Question {
   }
 
   public static void main(String[] args) {
-    new Question().Q1();
+    Q_8_30();
+  }
+
+  static void Q_8_30(){
+    Scanner scanner = new Scanner(System.in);
+    List<String> standard = Stream.of(scanner.nextLine().split(" ")).filter(el -> el.length() != 0).collect(Collectors.toList());
+    List<String> anwser = Stream.of(scanner.nextLine().split(" ")).filter(el -> el.length() != 0).collect(Collectors.toList());
+    int max = max_value(standard, anwser, 0, 0);
+    System.out.println(standard.size() + max);
+    scanner.close();
+  }
+
+  private static int max_value(List<String> standard, List<String> anwser, int s_start, int a_start){
+    if(s_start == standard.size()) return - ( anwser.size() - a_start );
+    if(a_start == anwser.size()) return - 2 * (standard.size() - s_start );
+    if(Objects.equals(standard.get(s_start), anwser.get(a_start))){
+      return Math.max(
+        Math.max( 
+          max_value(standard, anwser, s_start + 1, a_start + 1), 
+          max_value(standard, anwser, s_start + 1, a_start) - 2 /* missing */
+        ), 
+        /* add */max_value(standard, anwser, s_start, a_start + 1) - 1
+      );
+    }else {
+      int temp = Math.max( max_value(standard, anwser, s_start + 1, a_start /* missing */) - 2, max_value(standard, anwser, s_start, a_start + 1) - 1);
+      return is_replace(standard.get(s_start), anwser.get(a_start)) ? Math.max(temp, max_value(standard, anwser, s_start + 1, a_start + 1) - 1) : temp;
+    }
+  }
+
+  private static boolean is_replace(String replace, String source){
+    char[] scs = source.toCharArray();
+    char[] rcs = replace.toCharArray();
+    Arrays.sort(scs);
+    Arrays.sort(rcs);
+    int count = 0;
+    int left = 0;
+    int left_r = 0;
+    
+    while(left_r < replace.length() && left < source.length()){
+      while(left_r < replace.length() && left < source.length() && !Objects.equals( scs[left], rcs[left_r])){
+        if(scs[left] < rcs[left_r]){
+          left++;
+        }else left_r++;
+      }
+      if(left_r < replace.length() && left < source.length())
+        count++;
+      left++;
+      left_r++;
+    }
+    return count > replace.length() / 2;
   }
 
 }
