@@ -67,8 +67,12 @@ public class Question {
 
   static void Q_8_30(){
     Scanner scanner = new Scanner(System.in);
-    List<String> standard = Stream.of(scanner.nextLine().split(" ")).filter(el -> el.length() != 0).collect(Collectors.toList());
-    List<String> anwser = Stream.of(scanner.nextLine().split(" ")).filter(el -> el.length() != 0).collect(Collectors.toList());
+    List<String> standard = Stream.of(scanner.nextLine().split(" "))
+      .filter(el -> el.length() != 0)
+      .collect(Collectors.toList());
+    List<String> anwser = Stream.of(scanner.nextLine().split(" "))
+      .filter(el -> el.length() != 0)
+      .collect(Collectors.toList());
     int max = max_value(standard, anwser, 0, 0);
     System.out.println(standard.size() + max);
     scanner.close();
@@ -86,8 +90,16 @@ public class Question {
         /* add */max_value(standard, anwser, s_start, a_start + 1) - 1
       );
     }else {
-      int temp = Math.max( max_value(standard, anwser, s_start + 1, a_start /* missing */) - 2, max_value(standard, anwser, s_start, a_start + 1) - 1);
-      return is_replace(standard.get(s_start), anwser.get(a_start)) ? Math.max(temp, max_value(standard, anwser, s_start + 1, a_start + 1) - 1) : temp;
+      int temp = Math.max( 
+        max_value(standard, anwser, s_start + 1, a_start /* missing */) - 2, 
+        max_value(standard, anwser, s_start, a_start + 1) - 1
+      );
+      return is_replace(standard.get(s_start), anwser.get(a_start)) ? 
+      Math.max(
+        temp, 
+        max_value(standard, anwser, s_start + 1, a_start + 1) - 1
+      ) : 
+      temp;
     }
   }
 
