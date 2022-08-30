@@ -6,8 +6,6 @@ import java.util.Objects;
 import java.util.PriorityQueue;
 import java.util.Set;
 import java.util.Stack;
-import java.util.stream.Collectors;
-import java.util.stream.IntStream;
 
 import com.learn.utils.ListNode;
 import com.learn.utils.TreeNode;
@@ -183,5 +181,42 @@ public class Run {
 
   private int find(int[] set, int index){
     return set[index] == index ? index : find(set, set[index]);
+  }
+
+  // * 滑动窗口
+  // 209. 长度最小的子数组
+  // 给定一个含有 n 个正整数的数组和一个正整数 target 。
+  // 找出该数组中满足其和 ≥ target 的长度最小的 连续子数组 [numsl, numsl+1, ..., numsr-1, numsr] ，并返回其长度。如果不存在符合条件的子数组，返回 0 。
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/minimum-size-subarray-sum
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public int minSubArrayLen(int target, int[] nums) {
+    int sub_sum = 0;
+    int left = -1;
+    int min_len = Integer.MAX_VALUE;
+    boolean flag = false;
+    for(int i=0;i<nums.length; i++){
+      sub_sum += nums[i];
+      while(sub_sum - nums[left + 1] >= target){
+        left++;
+        sub_sum -= nums[left];
+      }
+      if(sub_sum >= target && i - left < min_len){
+        min_len = i - left;
+        flag = true;
+      }
+    }
+    return flag ? min_len : 0;
+  }
+
+
+  public int lengthOfLongestSubstring(String s) {
+    Set<Character> sub_chars = new HashSet<>();
+    int left = 0, right = 0;
+    final int len = s.length();
+    int max_len_ever = 1;
+    while(left < len && right < len){
+    }
+    return 0;
   }
 }
