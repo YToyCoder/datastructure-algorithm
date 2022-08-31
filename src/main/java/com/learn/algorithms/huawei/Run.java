@@ -209,14 +209,64 @@ public class Run {
     return flag ? min_len : 0;
   }
 
-
+  // * 滑动窗口
+  //  3. 无重复字符的最长子串
+  //  给定一个字符串 s ，请你找出其中不含有重复字符的 最长子串 的长度。
   public int lengthOfLongestSubstring(String s) {
     Set<Character> sub_chars = new HashSet<>();
     int left = 0, right = 0;
     final int len = s.length();
-    int max_len_ever = 1;
+    int max_len_ever = 0;
     while(left < len && right < len){
+      final char current = s.charAt(right);
+      while(left < right && sub_chars.contains(current))
+        sub_chars.remove(s.charAt(left++));
+      sub_chars.add(current);
+      right++;
+      max_len_ever = Math.max(sub_chars.size(), max_len_ever);
     }
-    return 0;
+    return max_len_ever;
+  }
+
+  // 1004. 最大连续1的个数 III
+  // 给定一个二进制数组 nums 和一个整数 k，如果可以翻转最多 k 个 0 ，则返回 数组中连续 1 的最大个数。
+  public int longestOnes(int[] nums, int k) {
+    int left = 0;
+    int k_count = 0;
+    int longest = 0;
+    for(int i=0; i < nums.length; i++){
+      if(nums[i] == 0) k_count++;
+      while(nums[i] == 0 && k_count > k)
+        if(nums[left++] == 0)
+          k_count--;
+      longest = Math.max(longest, i - left + 1);
+    }
+    return longest;
+  }
+
+  // * 滑动窗口
+  // 1208. 尽可能使字符串相等
+  // 给你两个长度相同的字符串，s 和 t。
+  // 将 s中的第i个字符变到t中的第 i 个字符需要s[i] - t[i]|的开销（开销可能为 0），也就是两个字符的 ASCII 码值的差的绝对值。
+  // 用于变更字符串的最大预算是maxCost。在转化字符串时，总开销应当小于等于该预算，这也意味着字符串的转化可能是不完全的。
+  // 如果你可以将 s 的子字符串转化为它在 t 中对应的子字符串，则返回可以转化的最大长度。
+  // 如果 s 中没有子字符串可以转化成 t 中对应的子字符串，则返回 0。
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/get-equal-substrings-within-budget
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public int equalSubstring(String s, String t, int maxCost) {
+    int left = 0;
+    final int len = s.length();
+    int remain = maxCost;
+    int max_len = 0;
+    for(int i=0; i<len; i++){
+      remain -= Math.abs(s.charAt(i) - t.charAt(i));
+      while( remain < 0 ){
+        remain += Math.abs(s.charAt(left) - t.charAt(left));
+        left++;
+      }
+      max_len = Math.max(max_len, i - left + 1);
+    }
+    return max_len;
   }
 }
