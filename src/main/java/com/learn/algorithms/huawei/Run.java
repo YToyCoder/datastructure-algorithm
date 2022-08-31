@@ -1,12 +1,9 @@
 package com.learn.algorithms.huawei;
 
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Objects;
-import java.util.PriorityQueue;
-import java.util.Set;
-import java.util.Stack;
+import java.util.*;
+import java.util.stream.IntStream;
 
+import com.learn.ds.table.Entry;
 import com.learn.utils.ListNode;
 import com.learn.utils.TreeNode;
 
@@ -268,5 +265,72 @@ public class Run {
       max_len = Math.max(max_len, i - left + 1);
     }
     return max_len;
+  }
+
+  // * 前缀和
+  // 724. 寻找数组的中心下标
+  //  给你一个整数数组nums ，请计算数组的 中心下标 。
+  //  数组 中心下标 是数组的一个下标，其左侧所有元素相加的和等于右侧所有元素相加的和。
+  //  如果中心下标位于数组最左端，那么左侧数之和视为 0 ，因为在下标的左侧不存在元素。这一点对于中心下标位于数组最右端同样适用。
+  //  如果数组有多个中心下标，应该返回 最靠近左边 的那一个。如果数组不存在中心下标，返回 -1 。
+  //  来源：力扣（LeetCode）
+  //  链接：https://leetcode.cn/problems/find-pivot-index
+  //  著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public int pivotIndex(int[] nums) {
+    final int len = nums.length;
+    int sum = IntStream.range(0, len).reduce(0, (pre, i) -> nums[i] + pre);
+    int sub_sum = 0;
+    for(int i=0; i<len; i++){
+      if(sum - nums[i] == sub_sum * 2 )
+        return i;
+      sub_sum += nums[i];
+    }
+    return -1;
+  }
+
+
+  // 560. 和为 K 的子数组
+  // 给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的连续子数组的个数 。
+  public int subarraySum(int[] nums, int k) {
+    int count = 0;
+    Map<Integer, IntHolder> pre_sum_freq = new HashMap<>();
+    pre_sum_freq.put(0, new IntHolder(1));
+    int sum = 0;
+    for(int el : nums){
+      sum += el;
+      IntHolder may_exists_prefix;
+      if(Objects.nonNull( may_exists_prefix = pre_sum_freq.get(sum - k)))
+        count += may_exists_prefix.val;
+      pre_sum_freq.computeIfAbsent(sum, key -> new IntHolder(0)).val++;
+    }
+    return count;
+  }
+
+  static class IntHolder {
+    int val;
+    public IntHolder(int _val){
+      val = _val;
+    }
+  }
+
+  // 1094. 拼车
+  // 车上最初有capacity个空座位。车只能向一个方向行驶（也就是说，不允许掉头或改变方向）
+  // 给定整数capacity和一个数组 trips , trip[i] = [numPassengersi, fromi, toi]表示第 i 次旅行有numPassengersi乘客，接他们和放他们的位置分别是fromi和toi。这些位置是从汽车的初始位置向东的公里数。
+  // 当且仅当你可以在所有给定的行程中接送所有乘客时，返回true，否则请返回 false。
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/car-pooling
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public boolean carPooling(int[][] trips, int capacity) {
+    TreeMap<Integer, IntHolder> walk = new TreeMap<>();
+    for(int[] el : trips){
+      walk.computeIfAbsent(el[1], key -> new IntHolder(0)).val += el[0];
+      walk.computeIfAbsent(el[2], key -> new IntHolder(0)).val -= el[0];
+    }
+    int sum = 0;
+    for(Map.Entry<Integer, IntHolder> stop : walk.entrySet()){
+      sum += stop.getValue().val;
+      if(sum > capacity) return false;
+    }
+    return true;
   }
 }
