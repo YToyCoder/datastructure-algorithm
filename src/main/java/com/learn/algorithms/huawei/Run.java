@@ -336,7 +336,6 @@ public class Run {
   }
 
 
-  // * 差分法
   // 121. 买卖股票的最佳时机
   //  给定一个数组 prices ，它的第i 个元素prices[i] 表示一支给定股票第 i 天的价格。
   //  你只能选择 某一天 买入这只股票，并选择在 未来的某一个不同的日子 卖出该股票。设计一个算法来计算你所能获取的最大利润。
@@ -361,4 +360,96 @@ public class Run {
     }
     return max;
   }
+
+
+  // * 差分
+  // 122. 买卖股票的最佳时机 II
+  // 给你一个整数数组 prices ，其中prices[i] 表示某支股票第 i 天的价格。
+  // 在每一天，你可以决定是否购买和/或出售股票。你在任何时候最多只能持有 一股 股票。你也可以先购买，然后在 同一天 出售。
+  // 返回 你能获得的 最大 利润。
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/best-time-to-buy-and-sell-stock-ii
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public int maxProfit2(int[] prices) {
+    int[] diff = new int[prices.length];
+    diff[0] = 0;
+    for(int i=1; i<prices.length; i++){
+      diff[i] = prices[i] - prices[i - 1];
+    }
+    int sum = 0;
+    for(int el : diff){
+      sum += Math.max(el, 0);
+    }
+    return sum;
+  }
+
+  static class GN {
+    int mark;
+    List<Integer> others;
+    public GN(int _mark, List<Integer> _others){
+      mark = _mark;
+      others = _others;
+    }
+
+    public GN(int _mark){
+      this(_mark, new LinkedList<>());
+    }
+  }
+
+  // 210. 课程表 II
+  // 现在你总共有 numCourses 门课需要选，记为 0 到 numCourses - 1。给你一个数组 prerequisites ，其中 prerequisites[i] = [ai, bi] ，表示在选修课程 ai 前 必须 先选修 bi 。
+  //
+  // 例如，想要学习课程 0 ，你需要先完成课程 1 ，我们用一个匹配来表示：[0,1] 。
+  // 返回你为了学完所有课程所安排的学习顺序。可能会有多个正确的顺序，你只要返回 任意一种 就可以了。如果不可能完成所有课程，返回 一个空数组 。
+  //
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/course-schedule-ii
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public int[] findOrder(int numCourses, int[][] prerequisites) {
+    GN[] edges = new GN[numCourses];
+    int[] ans = new int[numCourses];
+    // build graph
+    for(int i=0; i<numCourses; i++)
+      edges[i] = new GN(0, new ArrayList<>());
+    for(int[] rule : prerequisites){
+      edges[rule[1]].others.add(rule[0]);
+    }
+    int size = 0;
+    for(int i=0; i<numCourses; i++){
+      size = dfs(i, ans, size, edges);
+      if(size == -1) return new int[0];
+    }
+    return ans;
+  }
+
+  private int dfs(int start, int[] ans, int size, GN[] g){
+    if(visited(g[start])) return size;
+    if(g[start].others.isEmpty()) {
+      ans[ans.length - size - 1] = start;
+      set_visited(g[start]);
+      return size + 1;
+    }
+    if(g[start].mark == 2) return -1;
+    g[start].mark = 2;
+    for(Integer next : g[start].others){
+      if(!visited(g[next])){
+        final int record = size;
+        size = dfs(next, ans, size, g);
+        if(record == size) return -1;
+      }
+      if(size == -1) return -1;
+    }
+    set_visited(g[start]);
+    ans[ans.length - size - 1] = start;
+    return size + 1;
+  }
+
+  private boolean visited(GN n){
+    return n.mark == 1;
+  }
+
+  private  void set_visited(GN n){
+    n.mark = 1;
+  }
+
 }
