@@ -1,6 +1,7 @@
 package com.learn.algorithms.leetcode.medium;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.LinkedList;
 import java.util.List;
@@ -369,6 +370,45 @@ public class Medium {
       root.right = insertIntoMaxTree(root.right, val);
       return root;
     }
+  }
+
+  // 646. 最长数对链
+  // 给出 n 个数对。 在每一个数对中，第一个数字总是比第二个数字小。
+  // 现在，我们定义一种跟随关系，当且仅当 b < c 时，数对(c, d) 才可以跟在 (a, b) 后面。我们用这种形式来构造一个数对链。
+  // 给定一个数对集合，找出能够形成的最长数对链的长度。你不需要用到所有的数对，你可以以任何顺序选择其中的一些数对来构造。
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/maximum-length-of-pair-chain
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public int findLongestChain(int[][] pairs) {
+    Arrays.sort(pairs, (a , b) -> a[0] - b[0]);
+    int[] status = new int[pairs.length];
+    int[] max = new int[pairs.length];
+    for(int i=0; i<status.length; i++){
+      status[i] = -1;
+      max[i] = -1;
+    }
+    return Math.max(findLongestChain(0, pairs, status, max, new LinkedList<>()), 0);
+  }
+
+  private int findLongestChain(int start, int[][] pairs, int[] status, int[] max_ab, LinkedList<int[]> pres){
+    if(start >= pairs.length) return 0;
+    int pre_size = 0;
+    if(pres.isEmpty() || pairs[start][0] > pres.getLast()[1]){
+      if(status[start] == -1){ 
+        pres.add(pairs[start]);
+        pre_size = status[start] = 1 + findLongestChain(start + 1, pairs, status, max_ab, pres);
+        pres.removeLast();
+      }
+      if(max_ab[start] != -1) 
+        return Math.max(max_ab[start], status[start]);
+    }
+    int max = 0; 
+    for(int i = start + 1; i < pairs.length; i++){
+      if(pres.isEmpty() || pairs[i][0] > pres.getLast()[1])
+        max = Math.max(max, findLongestChain(i, pairs, status, max_ab, pres));
+    }
+    max_ab[start] = max;
+    return Math.max(max, pre_size);
   }
 
 }
