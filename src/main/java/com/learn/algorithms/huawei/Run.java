@@ -452,4 +452,8 @@ public class Run {
     n.mark = 1;
   }
 
+  public String longestPalindrome(String s) {
+    return "";
+  }
+
 }

@@ -2,13 +2,14 @@ package com.learn.algorithms.leetcode.medium;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collection;
 import java.util.Deque;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.PriorityQueue;
-import java.util.Queue;
 import java.util.TreeMap;
 
 import com.learn.utils.TreeNode;
@@ -410,5 +411,39 @@ public class Medium {
     max_ab[start] = max;
     return Math.max(max, pre_size);
   }
+
+  // 652. 寻找重复的子树
+  // 给定一棵二叉树 root，返回所有重复的子树。
+  // 对于同一类的重复子树，你只需要返回其中任意一棵的根结点即可。
+  // 如果两棵树具有相同的结构和相同的结点值，则它们是重复的。
+  // 来源：力扣（LeetCode）
+  // 链接：https://leetcode.cn/problems/find-duplicate-subtrees
+  // 著作权归领扣网络所有。商业转载请联系官方授权，非商业转载请注明出处。
+  public List<TreeNode> findDuplicateSubtrees(TreeNode root) {
+    Map<String, List<TreeNode>> serilized_map = new HashMap<>();
+    serilize(root, serilized_map);
+    return serilized_map.values().stream()
+    .filter(el -> el.size() > 1)
+    .map(el -> el.get(0))
+    .toList();
+  }
+
+  private String serilize(TreeNode root, Map<String, List<TreeNode>> serilize_map){
+    if(Objects.isNull(root)) 
+      return "";
+    String left  = serilize(root.left , serilize_map);
+    String right = serilize(root.right, serilize_map);
+    String serilized_str = (left.isBlank() ? "" : (left + "l ") ) + root.val + (right.isBlank() ? "" : (" r" + right) );
+    serilize_map.computeIfAbsent(serilized_str, key -> new LinkedList<>()).add(root);
+    return serilized_str;
+  }
+
+  /**
+   *          0
+   *        0   0
+   *      0  - -  0
+   *    0 -      - - 
+   *   0
+   */
 
 }
