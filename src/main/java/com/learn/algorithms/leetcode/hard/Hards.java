@@ -3,9 +3,6 @@ package com.learn.algorithms.leetcode.hard;
 import java.util.Arrays;
 
 public class Hards {
-  public static void main(String[] args) {
-  }
-
   public int uniqueLetterString(String s) {
     final int len = s.length();
     final char[] chars = s.toCharArray();

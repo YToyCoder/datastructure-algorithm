@@ -3,6 +3,7 @@ package com.learn.algorithms.leetcode.easy;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
@@ -145,5 +146,41 @@ public class Easys {
       index4next_less[i] = index4next_less[i] == i ? prices[i] : prices[i] - prices[index4next_less[i]];
     }
     return index4next_less;
+  }
+
+  // 1592. 重新排列单词间的空格
+  public String reorderSpaces(String text) {
+    boolean in_word = false;
+    final char[] chars = text.toCharArray();
+    final int len = text.length();
+    int left = 0;
+    int blank_count = 0;
+    List<String> strs = new LinkedList<>();
+    for(int i=0; i<len; i++){
+      final char cur = chars[i];
+      if(!in_word) {
+        if(!Objects.equals(cur, ' ')){
+          left = i;
+          in_word = true;
+          if(i + 1 == len){
+            strs.add(text.substring(len - 1));
+          }
+        }else
+          blank_count++;
+      }else{
+        if(i + 1 == len || Objects.equals(cur, ' ')){
+          blank_count += Objects.equals(cur, ' ') ? 1 : 0;
+          strs.add(text.substring(left, ( i + 1 == len && !Objects.equals(chars[i], ' ')) ? len : i));
+          in_word= false;
+        }
+      }
+    }
+    int tail_append = strs.size() <= 1 ? blank_count : blank_count % (strs.size() - 1);
+    int average = strs.size() <= 1 ? 0 : blank_count / (strs.size() - 1);
+    StringBuilder builder = new StringBuilder(strs.isEmpty() ? "" : strs.get(0));
+    for(int i=1; i<strs.size(); i++){
+      builder.append(" ".repeat(average)).append(strs.get(i));
+    }
+    return builder.append(" ".repeat(tail_append)).toString();
   }
 }
