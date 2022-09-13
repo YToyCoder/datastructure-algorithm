@@ -446,4 +446,32 @@ public class Medium {
    *   0
    */
 
+  // 670. 最大交换
+  public int maximumSwap(int num) {
+    if(num <= 10) return num;
+    int max_ever = num % 10, max_ever_loc = 0;
+    int next_loc_value; 
+    int max = num;
+    for(int i=10; (next_loc_value = (num / i )) > 0 ; i *= 10){
+      next_loc_value %= 10l;
+      if(next_loc_value < max_ever) {
+        max = replace(num, i, next_loc_value,max_ever_loc, max_ever);
+      }else if(next_loc_value > max_ever){
+        max_ever = next_loc_value;
+        max_ever_loc = i;
+      }
+    }
+    return max;
+  }
+
+  private int replace(int num, int up, int upV, int low, int lowV){
+    int ans = num;
+    if(low == 0){
+      ans = (num / 10) * 10 + upV;
+    }else{
+      ans = (num / (low * 10)) * (low * 10) + upV * low + num % low; 
+    }
+    return (ans/ ( up * 10 )) * up * 10 + lowV * up + ans% up;
+  }
+
 }
