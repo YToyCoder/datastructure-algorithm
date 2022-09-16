@@ -56,4 +56,21 @@ public class SearchAndSort {
   public static <T extends Comparable<T> > List<T> findKclosest(List<T> ls, int k, T x, BiFunction<T,T,Integer> distanceBetween){
     return findKClosest(ls, k, x, T::compareTo, distanceBetween);
   }
+
+  public static <T extends Comparable<T> > int binary_search(List<T> ls, T target){
+    int start = 0;
+    int end = ls.size();
+    while(start < end){
+      final int mid = (start + end) >> 1;
+      int comp_result = target.compareTo(ls.get(mid));
+      if(comp_result == 0)
+        return mid;
+      else if(comp_result < 0)
+        end = mid;
+      else
+        start = mid;
+    }
+    return -1;
+  }
+
 }
