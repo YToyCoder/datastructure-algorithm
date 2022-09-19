@@ -1,8 +1,12 @@
 package com.learn.algorithms.leetcode.easy;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Comparator;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Queue;
 
@@ -211,6 +215,30 @@ public class Easys {
       }
     }
     return step;
+  }
+
+  // 1636. 按照频率将数组升序排序
+  // 给你一个整数数组 nums ，请你将数组按照每个值的频率 升序 排序。如果有多个值的频率相同，请你按照数值本身将它们 降序 排序。 
+  // 请你返回排序后的数组。
+  public int[] frequencySort(int[] nums) {
+    Map<Integer, IntHolder> map = new HashMap<>();
+    for(int el : nums)
+      map.computeIfAbsent(el, key -> new IntHolder()).int4++;
+    int walk = 0;
+    List<Map.Entry<Integer, IntHolder> > entries = new ArrayList<>( map.entrySet() );
+    entries.sort((a, b) -> b.getKey() - a.getKey());
+    entries.sort((a, b) -> a.getValue().int4 - b.getValue().int4);
+    int[] ans = new int[nums.length];
+    for(Map.Entry<Integer, IntHolder> entry : entries){
+      for(int i=0; i<entry.getValue().int4; i++){
+        ans[walk++] = entry.getKey();
+      }
+    }
+    return ans;
+  }
+
+  static class IntHolder {
+    int int4;
   }
 
 }
