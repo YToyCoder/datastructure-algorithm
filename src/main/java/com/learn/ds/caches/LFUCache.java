@@ -29,10 +29,14 @@ public class LFUCache<K,V> implements Cache<K,V>{
     capacity = _capacity;
   }
 
+  public static <K,V> LFUCache<K,V> create(int capacity){
+    return new LFUCache<>(capacity);
+  }
+
   @Override
   public V get(K key) {
     // return map.get(key);
-    return Optional.of(map.get(key))
+    return Optional.ofNullable(map.get(key))
     .map(node -> {
       if(Objects.nonNull(node)){
         node.frequent++;
@@ -49,10 +53,8 @@ public class LFUCache<K,V> implements Cache<K,V>{
     V res = null;
     if(size == capacity) {
       res = remove_tail();
-      size--;
     }
     append(key, val);
-    size++;
     return res;
   }
 
@@ -68,37 +70,51 @@ public class LFUCache<K,V> implements Cache<K,V>{
       queue_tail = queue_tail.head;
       queue_tail.tail = null;
     }
+    size--;
     return tail_value;
   }
 
   private void move_forward(Node<K,V> node){
-    while(
-      !Objects.equals(node, queue_head) || 
-      node.head.frequent <= node.frequent
-    ){
+    if(size > 1){
+      Node<K,V> head2insert = node.head;
+      while(
+        Objects.nonNull(head2insert) && 
+        head2insert.frequent <= node.frequent
+      ) head2insert = head2insert.head;
 
-      var pre = node.head;
-      var pp = pre.head;
-      // pp -> pre -> node -> next
-      // pp -> node -> pre -> next
-      // two cases
-      // case 1 pre is queue_head
-      // case 2 pre not queue_head
-
-      // common ops
-      pre.tail = node.tail;
-      node.tail.head = pre;
-      pre.head = node;
-      node.tail = pre;
-
-      if(pre == queue_head /* case 1 */){
-        queue_head = node;
+      if(!Objects.equals(head2insert, node.head) /* head2insert not head */){
+        // break chain
+        //head can't be null
+        var head = node.head;
+        if(node == queue_tail){
+          queue_tail = head;
+        }
         node.head = null;
-      }else { /* case 2 */
-        node.head = pp;
-        pp.tail = node;
+        head.tail = node.tail;
+        if(Objects.nonNull(node.tail)){
+          var tail = node.tail;
+          tail.head = head;
+          node.tail = null;
+        }
+
+        // link head #todo
+        if(Objects.nonNull(head2insert)){
+          // insert
+          var tail2add = head2insert.tail;
+          head2insert.tail = node;
+          node.head = head2insert;
+          node.tail = tail2add;
+          if(Objects.nonNull(tail2add)){
+            tail2add.head = node;
+          }
+        }else {
+          // append to head
+          node.tail = queue_head;
+          queue_head.head = node;
+          queue_head = node;
+        }
       }
-    }
+    } 
   }
   /**
    * just append, not do other checking things
@@ -110,8 +126,10 @@ public class LFUCache<K,V> implements Cache<K,V>{
       queue_head = queue_tail = new Node<K, V>(key, val, null, null);
     }else {
       queue_tail = new Node<>(key, val, queue_tail, null);
+      queue_tail.head.tail = queue_tail;
     }
     map.put(key, queue_tail);
+    size++;
   }
 
   /**
