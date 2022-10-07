@@ -144,11 +144,12 @@ public class LFUCache<K,V> implements Cache<K,V>{
     V value;
     int frequent;
 
-    public Node(K key, V _value, Node<K, V> _head, Node<K, V> _tail){
+    public Node(K _key, V _value, Node<K, V> _head, Node<K, V> _tail){
       value = _value;
       head = _head;
       tail = _tail;
       frequent = 0;
+      key = _key;
     }
 
   }
