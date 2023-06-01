@@ -2,3 +2,7 @@ target
 .vscode
 build
 .idea
+project/
+.metals/
+.bsp/
+.bloop/
